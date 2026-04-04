@@ -1,0 +1,21 @@
+<nav class="nav-pro" [class.scrolled]="isScrolled">
+  <div class="nav-wrapper">
+    <div class="logo-box" routerLink="/home">
+      <span class="logo gradient-text">CoffeeGo</span>
+    </div>
+    
+    <div class="links-box">
+      <a routerLink="/home" routerLinkActive="active" class="nav-link">Inicio</a>
+      <a routerLink="/movies" routerLinkActive="active" class="nav-link">Películas</a>
+      <a routerLink="/series" routerLinkActive="active" class="nav-link">Series</a>
+    </div>
+
+    <div class="actions-box">
+      <div class="search-bubble">
+        <span class="search-ico">🔍</span>
+        <input type="text" placeholder="Buscar..." class="search-input">
+      </div>
+      <button class="btn-coffee-glow">Premium</button>
+    </div>
+  </div>
+</nav>

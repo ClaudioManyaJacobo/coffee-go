@@ -1,0 +1,35 @@
+<header class="hero-banner" *ngIf="heroMovie" [style.background-image]="'url(https://image.tmdb.org/t/p/original' + heroMovie.backdrop_path + ')'">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <span class="badge-new">NUEVO TOP {{ currentHeroIndex + 1 }}</span>
+      <h1 class="hero-title">{{ heroMovie.title || heroMovie.name }}</h1>
+      <p class="hero-overview">{{ (heroMovie.overview | slice:0:220) + '...' }}</p>
+      <div class="hero-actions">
+        <button class="btn-play">▶ REPRODUCIR</button>
+        <button class="btn-info">ⓘ INFO</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="content-container">
+  <section class="section-row" *ngIf="trending$ | async as trending">
+    <h2 class="row-title">Tendencias de la Semana</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel-track right-to-left">
+        <app-movie-card *ngFor="let item of trending.movies" [movie]="item"></app-movie-card>
+        <app-movie-card *ngFor="let item of trending.movies" [movie]="item"></app-movie-card> <!-- Duplicado para infinito -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section-row-mt-5" *ngIf="trending$ | async as trending">
+    <h2 class="row-title">Series Top CoffeeGo</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel-track left-to-right">
+        <app-movie-card *ngFor="let item of trending.series" [movie]="item"></app-movie-card>
+        <app-movie-card *ngFor="let item of trending.series" [movie]="item"></app-movie-card> <!-- Duplicado para infinito -->
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,17 @@
+<div class="content-view">
+  <div class="hero-background"></div>
+  <header class="section-hero">
+    <h1 class="gradient-text">Series <span class="accent">Destacadas</span></h1>
+    <p class="subtitle">Adéntrate en historias cautivadoras y descubre la mejor televisión.</p>
+  </header>
+
+  <main class="main-grid" *ngIf="series$ | async as seriesData">
+    <app-movie-card *ngFor="let serie of seriesData.results" [movie]="serie"></app-movie-card>
+  </main>
+
+  <div class="pagination-bar mt-5">
+    <button class="btn-page" (click)="prevPage()" [disabled]="(page$ | async) === 1">ANTERIOR</button>
+    <span class="page-current">Página {{ page$ | async }}</span>
+    <button class="btn-page" (click)="nextPage()">SIGUIENTE</button>
+  </div>
+</div>

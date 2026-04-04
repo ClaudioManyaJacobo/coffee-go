@@ -1,0 +1,70 @@
+.hero-banner { 
+  height: 85vh; 
+  background-size: cover; 
+  background-position: center top; 
+  position: relative; 
+  transition: background-image 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-overlay {
+  background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 60%, transparent 100%),
+              linear-gradient(to top, #0a0908 0%, transparent 40%);
+  height: 100%; display: flex; align-items: center; padding: 0 5%;
+}
+.hero-content { max-width: 600px; }
+.hero-title { font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+.badge-new { background: var(--primary); color: #000; padding: 5px 15px; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px; display: inline-block; margin-bottom: 1.5rem; }
+.hero-overview { font-size: 1.2rem; color: #ddd; line-height: 1.6; margin-bottom: 2rem; }
+.hero-actions { display: flex; gap: 1rem; }
+.btn-play { background: #fff; color: #000; border: none; padding: 15px 40px; border-radius: 5px; font-weight: 900; cursor: pointer; transition: 0.3s; &:hover { background: var(--primary); } }
+.btn-info { background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 15px 30px; border-radius: 5px; font-weight: 800; cursor: pointer; }
+
+.content-container { padding: 5rem 5% 10rem; margin-top: -150px; position: relative; z-index: 10; }
+.section-row { margin-bottom: 4rem; }
+.section-row-mt-5 { margin-top: 5rem; margin-bottom: 4rem; }
+.row-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 5px solid var(--primary); padding-left: 1rem; color: #fefae0; }
+
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+}
+
+.carousel-track app-movie-card {
+  width: 250px;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+.carousel-track app-movie-card:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.right-to-left {
+  animation: scrollRTL 45s linear infinite;
+  &:hover { animation-play-state: paused; }
+}
+
+.left-to-right {
+  animation: scrollLTR 45s linear infinite;
+  &:hover { animation-play-state: paused; }
+}
+
+@keyframes scrollRTL {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollLTR {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}

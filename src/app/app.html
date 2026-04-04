@@ -1,0 +1,11 @@
+<app-loading *ngIf="loadingService.isLoading$ | async"></app-loading>
+
+<div class="app-layout" [class.hidden]="loadingService.isLoading$ | async">
+  <app-navbar></app-navbar>
+
+  <main class="viewport">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+</div>

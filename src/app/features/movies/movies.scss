@@ -1,0 +1,99 @@
+.content-view {
+  padding: 10rem 5% 5rem; /* Ajustado el padding top a 10rem para limpiar el Navbar */
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.15) 0%, transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.section-hero {
+  margin-bottom: 4rem;
+  text-align: center;
+  position: relative;
+  
+  .gradient-text {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #ffffff, #aaaaaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    .accent {
+      background: linear-gradient(135deg, var(--primary), #ff4b4b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .subtitle {
+    color: #a0a0a0;
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2.5rem;
+  z-index: 1;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  .page-current {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 600;
+    min-width: 100px;
+    text-align: center;
+  }
+}
+
+.btn-page {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(10px);
+  color: var(--primary);
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #333333;
+    color: #666666;
+  }
+
+  &:not(:disabled):hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(229, 9, 20, 0.2);
+  }
+}

@@ -1,0 +1,17 @@
+<div class="content-view">
+  <div class="hero-background"></div>
+  <header class="section-hero">
+    <h1 class="gradient-text">Películas <span class="accent">Populares</span></h1>
+    <p class="subtitle">Explora los títulos más espectaculares y aclamados del cine mundial.</p>
+  </header>
+
+  <main class="main-grid" *ngIf="movies$ | async as moviesData">
+    <app-movie-card *ngFor="let movie of moviesData.results" [movie]="movie"></app-movie-card>
+  </main>
+
+  <div class="pagination-bar mt-5">
+    <button class="btn-page" (click)="prevPage()" [disabled]="(page$ | async) === 1">ANTERIOR</button>
+    <span class="page-current">Página {{ page$ | async }}</span>
+    <button class="btn-page" (click)="nextPage()">SIGUIENTE</button>
+  </div>
+</div>
