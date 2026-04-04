@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
     window.scrollTo(0, 0);
     this.mediaService.searchMedia(this.query, this.page).subscribe({
       next: (data) => {
-        this.results = data.results.filter((r: any) => r.media_type === 'movie' || r.media_type === 'tv');
+        this.results = data.results;
         this.totalPages = data.total_pages;
         this.isLoading = false;
         this.loadingService.hide();
