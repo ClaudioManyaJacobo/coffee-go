@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MediaService } from '../../../services/media.service';
 import { Subscription } from 'rxjs';
+import { HashService } from '../../../services/hash.service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +32,8 @@ export class Navbar implements OnInit, OnDestroy {
   constructor(
     private mediaService: MediaService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private hashService: HashService
   ) {}
 
   ngOnInit() {
@@ -140,7 +142,8 @@ export class Navbar implements OnInit, OnDestroy {
     this.isOpen = false;
     this.searchControl.setValue('', { emitEvent: false });
     this.suggestions = [];
-    this.router.navigate(['/details', item.media_type, item.id]);
+    const hashedId = this.hashService.encode(item.id);
+    this.router.navigate(['/details', item.media_type, hashedId]);
   }
 
   onVerTodos() {

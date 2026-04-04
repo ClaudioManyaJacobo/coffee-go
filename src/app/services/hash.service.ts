@@ -4,46 +4,53 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HashService {
-  // Alfabeto mezclado para ofuscación (actúa como clave)
-  private readonly alphabet = 'w7PQRS0123456789bcDeFgHiJkLmNoPqRsTuVwXyZ-_AbCdEfGhIjKlMnOpQrStUvWxYz';
-  private readonly minLength = 6;
+  /**
+   * CoffeeGo Secure ID System (Stable Edition)
+   * Utiliza Base64-URL Safe para garantizar que todos los IDs,
+   * incluyendo los de sugerencias, funcionen perfectamente.
+   */
+  
+  private readonly PREFIX = 'cg_';
 
   /**
-   * Codifica un ID numérico a un Hash profesional
+   * Codifica el ID a un formato Base64 protegida
    */
-  encode(id: number | string | undefined): string {
-    if (id === undefined) return '';
-    let num = Number(id);
-    if (isNaN(num) || num === 0) return String(id);
+  encode(id: any): string {
+    if (id === undefined || id === null) return '';
+    const strId = String(id);
     
-    let hash = '';
-    const base = this.alphabet.length;
-
-    while (num > 0) {
-      hash = this.alphabet[num % base] + hash;
-      num = Math.floor(num / base);
-    }
-
-    return hash.padStart(this.minLength, this.alphabet[0]);
+    // Obscurecer mínimamente agregando un valor prefijo interno
+    const obs = `cgo_${strId}`;
+    
+    // Encode to Base64 and make it URL safe
+    const base64 = btoa(obs);
+    return this.PREFIX + base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   }
 
   /**
-   * Decodifica el Hash de vuelta al ID real de TMDB
+   * Decodifica de vuelta al ID original
    */
   decode(hash: string | null): string {
-    if (!hash) return '';
-    const base = this.alphabet.length;
-    let num = 0;
-    
-    // Eliminamos el relleno (padding) del inicio
-    const cleanHash = hash.replace(new RegExp(`^${this.alphabet[0]}+`), '');
-    
-    for (let i = 0; i < cleanHash.length; i++) {
-      const charIndex = this.alphabet.indexOf(cleanHash[i]);
-      if (charIndex === -1) return hash; 
-      num = num * base + charIndex;
-    }
+    if (!hash || !hash.startsWith(this.PREFIX)) return '';
 
-    return num.toString();
+    try {
+      let base64 = hash.substring(this.PREFIX.length)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      
+      // Re-add padding
+      while (base64.length % 4 !== 0) {
+        base64 += '=';
+      }
+
+      const decoded = atob(base64);
+      if (decoded.startsWith('cgo_')) {
+        return decoded.substring(4);
+      }
+      return decoded;
+    } catch (e) {
+      console.error('CoffeeGo Trace: Decode failed', e);
+      return '';
+    }
   }
 }

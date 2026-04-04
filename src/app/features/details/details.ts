@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
@@ -33,6 +33,7 @@ export class Details implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private mediaService: MediaService,
     private sanitizer: DomSanitizer
   ) {}
@@ -51,6 +52,12 @@ export class Details implements OnInit, OnDestroy {
   }
 
   loadDetails(id: string, type: string) {
+    if (!id || id === 'undefined' || id === 'null') {
+      console.error('CoffeeGo Trace: Invalid ID detected, redirecting to home.');
+      this.router.navigate(['/home']);
+      return;
+    }
+
     this.media = null;
     this.selectedSeason = null;
     this.seasonEpisodes = [];
@@ -74,8 +81,9 @@ export class Details implements OnInit, OnDestroy {
           this.selectSeason(firstSeason);
         }
       },
-      error: () => {
-        // Manejar error de carga (ej. redirigir al inicio)
+      error: (err) => {
+        console.error('CoffeeGo error loading details:', err);
+        this.router.navigate(['/home']);
       }
     });
   }
