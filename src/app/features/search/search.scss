@@ -72,3 +72,25 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .search-view { padding: 6.5rem 4% 2rem; }
+  .header-section { margin-bottom: 2rem; padding-bottom: 1.5rem; }
+  .search-title { font-size: 1.6rem; }
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .pagination-wrapper {
+    flex-direction: column;
+    gap: 0.8rem;
+    .page-indicator { font-size: 0.9rem; }
+    .btn-page { padding: 8px 18px; font-size: 0.8rem; }
+  }
+}

@@ -98,3 +98,27 @@
     box-shadow: 0 8px 15px rgba(229, 9, 20, 0.2);
   }
 }
+@media (max-width: 768px) {
+  .content-view { padding: 6.5rem 3% 2rem; }
+  .section-hero {
+    .gradient-text { font-size: 2.2rem; }
+    .subtitle { font-size: 1rem; }
+  }
+  .main-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.2rem;
+  }
+  .pagination-bar {
+    gap: 1rem;
+    flex-direction: column;
+    .page-current { font-size: 1rem; margin-bottom: 0.5rem; }
+  }
+}
+
+@media (max-width: 480px) {
+  .main-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .btn-page { padding: 10px 20px; font-size: 0.85rem; }
+}
