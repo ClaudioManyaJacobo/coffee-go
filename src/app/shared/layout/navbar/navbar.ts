@@ -20,7 +20,8 @@ export class Navbar implements OnInit, OnDestroy {
   searchControl = new FormControl('');
   suggestions: any[] = [];
   isLoading     = false;
-  isOpen        = false;
+  isOpen        = false; // Sugerencias de búsqueda
+  isMenuOpen    = false; // Menú móvil (hamburguesa)
 
   private debounceTimer: any = null;
   private searchSub:  Subscription | null = null;
@@ -42,11 +43,21 @@ export class Navbar implements OnInit, OnDestroy {
       this.suggestions = [];
       this.isLoading   = false;
       this.isOpen      = false;
+      this.isMenuOpen  = false; // Cerrar menú móvil al navegar
     });
 
     this.valueSub = this.searchControl.valueChanges.subscribe(val => {
       this.onQueryChange((val ?? '').trim());
     });
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) this.isOpen = false; // Cerrar búsqueda si abrimos menú
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   private onQueryChange(query: string) {
