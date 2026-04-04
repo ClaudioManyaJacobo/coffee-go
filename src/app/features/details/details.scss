@@ -32,23 +32,21 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to bottom,  rgba(10,9,8,0.15) 0%,  rgba(10,9,8,0.5)  55%, rgba(10,9,8,1)   100%),
-      linear-gradient(to right,   rgba(10,9,8,0.85) 0%,  rgba(10,9,8,0.3)  50%, transparent      100%);
+      linear-gradient(to bottom, rgba(10, 9, 8, 0.15) 0%, rgba(10, 9, 8, 0.5) 55%, rgba(10, 9, 8, 1) 100%),
+      linear-gradient(to right, rgba(10, 9, 8, 0.85) 0%, rgba(10, 9, 8, 0.3) 50%, transparent 100%);
   }
 }
 
 // ── Backdrop Placeholder (sin imagen) ────────────────────────
 .backdrop-placeholder {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(212,163,115,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(212,163,115,0.04) 0%, transparent 50%),
-    repeating-linear-gradient(
-      45deg,
+    radial-gradient(ellipse at 20% 50%, rgba(212, 163, 115, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(212, 163, 115, 0.04) 0%, transparent 50%),
+    repeating-linear-gradient(45deg,
       transparent,
       transparent 18px,
-      rgba(255,255,255,0.012) 18px,
-      rgba(255,255,255,0.012) 19px
-    ),
+      rgba(255, 255, 255, 0.012) 18px,
+      rgba(255, 255, 255, 0.012) 19px),
     #111009;
 
   // No necesita blur ni escala, pero sí el gradiente de salida
@@ -57,8 +55,8 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to bottom, rgba(10,9,8,0) 0%, rgba(10,9,8,0.6) 60%, rgba(10,9,8,1) 100%),
-      linear-gradient(to right,  rgba(10,9,8,0.9) 0%, rgba(10,9,8,0.4) 45%, transparent 100%);
+      linear-gradient(to bottom, rgba(10, 9, 8, 0) 0%, rgba(10, 9, 8, 0.6) 60%, rgba(10, 9, 8, 1) 100%),
+      linear-gradient(to right, rgba(10, 9, 8, 0.9) 0%, rgba(10, 9, 8, 0.4) 45%, transparent 100%);
   }
 }
 
@@ -89,7 +87,7 @@
 
   &__sub {
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.2);
+    color: rgba(255, 255, 255, 0.2);
     letter-spacing: 0.1em;
   }
 }
@@ -105,14 +103,27 @@
     height: 48px;
     color: rgba(212, 163, 115, 0.2);
     animation: cupFloat 3s ease-in-out infinite;
-    &:first-of-type  { animation-delay: 0.4s; }
-    &:last-of-type   { animation-delay: 0.8s; }
+
+    &:first-of-type {
+      animation-delay: 0.4s;
+    }
+
+    &:last-of-type {
+      animation-delay: 0.8s;
+    }
   }
 }
 
 @keyframes cupFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 // ── Poster Placeholder (formato vertical 3:4) ────────────────
@@ -120,12 +131,10 @@
   width: 100%;
   height: 480px;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(212,163,115,0.08) 0%, transparent 65%),
-    repeating-linear-gradient(
-      45deg,
+    radial-gradient(ellipse at 50% 40%, rgba(212, 163, 115, 0.08) 0%, transparent 65%),
+    repeating-linear-gradient(45deg,
       transparent, transparent 14px,
-      rgba(255,255,255,0.015) 14px, rgba(255,255,255,0.015) 15px
-    ),
+      rgba(255, 255, 255, 0.015) 14px, rgba(255, 255, 255, 0.015) 15px),
     #141210;
   display: flex;
   flex-direction: column;
@@ -149,7 +158,7 @@
 
   &__sub {
     font-size: 0.72rem;
-    color: rgba(255,255,255,0.2);
+    color: rgba(255, 255, 255, 0.2);
     letter-spacing: 0.08em;
   }
 }
@@ -168,8 +177,14 @@
     width: 34px;
     height: 34px;
     color: rgba(212, 163, 115, 0.22);
-    &:first-child { animation-delay: 0.5s; }
-    &:last-child  { animation-delay: 1s; }
+
+    &:first-child {
+      animation-delay: 0.5s;
+    }
+
+    &:last-child {
+      animation-delay: 1s;
+    }
   }
 }
 
@@ -178,12 +193,10 @@
   width: 100%;
   height: 240px;
   background:
-    radial-gradient(ellipse at 50% 45%, rgba(212,163,115,0.07) 0%, transparent 70%),
-    repeating-linear-gradient(
-      45deg,
+    radial-gradient(ellipse at 50% 45%, rgba(212, 163, 115, 0.07) 0%, transparent 70%),
+    repeating-linear-gradient(45deg,
       transparent, transparent 10px,
-      rgba(255,255,255,0.013) 10px, rgba(255,255,255,0.013) 11px
-    ),
+      rgba(255, 255, 255, 0.013) 10px, rgba(255, 255, 255, 0.013) 11px),
     #141210;
   display: flex;
   flex-direction: column;
@@ -232,27 +245,74 @@
     width: 320px;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
-    img { width: 100%; display: block; }
+    img {
+      width: 100%;
+      display: block;
+    }
   }
 
   .info {
     flex: 1;
-    .title { font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem; line-height: 1.1; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-    .meta { 
-      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.5rem;
-      .rating { background: var(--primary); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 800; }
-      .year { color: #ccc; font-weight: 600; font-size: 1.1rem; }
-      .genre { border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; color: #ddd; }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      color: #fff;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
     }
-    .overview { font-size: 1.25rem; line-height: 1.6; color: #ccc; max-width: 800px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .rating {
+        background: var(--primary);
+        color: #000;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-weight: 800;
+      }
+
+      .year {
+        color: #ccc;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .genre {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: #ddd;
+      }
+    }
+
+    .overview {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: #ccc;
+      max-width: 800px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
   }
 }
 
-.mt-5 { margin-top: 4rem; }
-.mb-5 { margin-bottom: 4rem; }
+.mt-5 {
+  margin-top: 4rem;
+}
+
+.mb-5 {
+  margin-bottom: 4rem;
+}
 
 .section-title {
   font-size: 2rem;
@@ -279,42 +339,88 @@
 
 .scroll-active.right-to-left {
   animation: scrollRTL 40s linear infinite;
-  &:hover { animation-play-state: paused; }
+
+  &:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes scrollRTL {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .scroll-active.left-to-right {
   animation: scrollLTR 45s linear infinite;
-  &:hover { animation-play-state: paused; }
+
+  &:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes scrollLTR {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .cast-card {
   width: 140px;
   flex-shrink: 0;
   text-align: center;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 10px;
   overflow: hidden;
   padding-bottom: 10px;
   transition: transform 0.3s;
 
-  &:hover { transform: scale(1.05); background: rgba(255,255,255,0.05); }
+  &:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.05);
+  }
 
-  img, .no-photo { width: 100%; height: 210px; object-fit: cover; }
-  .no-photo { background: #222; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
-  
-  .actor-info { padding: 10px 5px 0; }
-  .actor-name { font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 4px; }
-  .actor-char { font-size: 0.8rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  img,
+  .no-photo {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+  }
+
+  .no-photo {
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .actor-info {
+    padding: 10px 5px 0;
+  }
+
+  .actor-name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+
+  .actor-char {
+    font-size: 0.8rem;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .similar-card-wrapper {
@@ -328,27 +434,66 @@
   overflow-x: auto;
   padding-bottom: 1.5rem;
 
-  &::-webkit-scrollbar { height: 8px; }
-  &::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
-  &::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+  }
 }
 
 .season-card {
   width: 160px;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: 0.3s;
-  &:hover { transform: translateY(-5px); border-color: rgba(212, 163, 115, 0.4); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
 
-  img, .no-coffee-placeholder { width: 100%; height: 240px; object-fit: cover; }
-  
-  .season-info { padding: 1rem; text-align: center; }
-  h3 { font-size: 1.1rem; color: #fff; font-weight: 800; margin-bottom: 5px; }
-  .season-year { font-size: 0.8rem; color: var(--primary); margin-bottom: 5px; font-weight: 700; }
-  .season-episodes { font-size: 0.85rem; color: #999; }
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212, 163, 115, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  img,
+  .no-coffee-placeholder {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+
+  .season-info {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  .season-year {
+    font-size: 0.8rem;
+    color: var(--primary);
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  .season-episodes {
+    font-size: 0.85rem;
+    color: #999;
+  }
 }
 
 .video-wrapper {
@@ -366,10 +511,10 @@
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(229, 9, 20, 0.15);
-  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   background-color: #000;
-  
+
   iframe {
     position: absolute;
     top: 0;
@@ -380,6 +525,415 @@
 }
 
 .vidfast-player .video-container {
-  box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 163, 115, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 163, 115, 0.35);
   border: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+// ── TV Series: Seasons & Episodes (Vacan Style) ────────────────
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.premium-season-selector {
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+.seasons-tabs-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) rgba(255, 255, 255, 0.05);
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+  }
+}
+
+.new-season-btn {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  color: #888;
+  padding: 0;
+  overflow: hidden;
+
+  .btn-season-poster {
+    width: 100%;
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    background: #111;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.5s ease;
+      filter: brightness(0.7);
+    }
+
+    .poster-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      padding: 2rem;
+    }
+  }
+
+  .btn-season-info {
+    padding: 0.8rem 0.5rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    width: 100%;
+
+    .btn-season-num {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .btn-season-name {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(212, 163, 115, 0.3);
+    color: #fff;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+
+    .btn-season-poster img {
+      filter: brightness(0.9) scale(1.05);
+    }
+  }
+
+  &.active {
+    background: rgba(212, 163, 115, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 10px 25px rgba(212, 163, 115, 0.2);
+    transform: translateY(-8px);
+
+    .btn-season-poster img {
+      filter: brightness(1) saturate(1.1);
+    }
+
+    .btn-season-info {
+      background: rgba(212, 163, 115, 0.15);
+    }
+
+    .btn-season-num {
+      color: var(--primary);
+    }
+  }
+}
+
+.ep-viewer-card {
+  padding: 2.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+}
+
+.ep-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.5rem;
+
+  .current-season-display {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .season-stats {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+    opacity: 0.8;
+  }
+}
+
+.premium-loader-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.ep-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  color: #555;
+  text-align: center;
+  gap: 1.5rem;
+
+  p {
+    font-size: 1.1rem;
+  }
+
+  svg {
+    color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.ep-grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  max-height: 850px;
+  overflow-y: auto;
+  padding-right: 1.5rem;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+.premium-ep-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.4s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-8px);
+    border-color: rgba(212, 163, 115, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+
+    .ep-thumb-img {
+      transform: scale(1.08);
+      filter: brightness(0.6);
+    }
+
+    .ep-card-overlay {
+      opacity: 1;
+    }
+  }
+
+  &.active {
+    background: rgba(212, 163, 115, 0.12);
+    border-color: var(--primary);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(212, 163, 115, 0.1);
+
+    .ep-card-title {
+      color: var(--primary);
+    }
+
+    .ep-thumb-img {
+      filter: brightness(0.5) saturate(1.2);
+    }
+  }
+
+  .ep-thumb-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+
+    .ep-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.6s ease;
+    }
+
+    .ep-thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #333;
+    }
+  }
+
+  .ep-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s ease;
+
+    .play-icon-glow {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      box-shadow: 0 0 20px var(--primary);
+
+      svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+      }
+    }
+  }
+
+  .ep-details-content {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .ep-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.75rem;
+
+      .ep-chip {
+        background: var(--primary);
+        color: #000;
+        font-size: 0.7rem;
+        font-weight: 800;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+
+      .ep-date,
+      .ep-time {
+        font-size: 0.75rem;
+        color: #666;
+        font-weight: 600;
+      }
+    }
+
+    .ep-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .ep-card-overview {
+      font-size: 0.9rem;
+      color: #999;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .ep-active-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary);
+    box-shadow: 0 -2px 10px var(--primary);
+  }
+}
+
+.mini-loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(212, 163, 115, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: mini-spin 0.8s linear infinite;
+}
+
+@keyframes mini-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1200px) {
+  .ep-grid-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .ep-grid-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ep-viewer-card {
+    padding: 1.5rem;
+  }
+
+  .ep-viewer-header .current-season-display {
+    font-size: 1.7rem;
+  }
 }

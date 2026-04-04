@@ -64,4 +64,8 @@ export class MediaService {
   searchMedia(query: string, page: number = 1): Observable<PaginatedResult<Media>> {
     return this.http.get<PaginatedResult<Media>>(`${this.apiUrl}/search?q=${query}&page=${page}`);
   }
+
+  getSeasonDetails(id: string | number, seasonNumber: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/details/tv/${id}/season/${seasonNumber}`);
+  }
 }

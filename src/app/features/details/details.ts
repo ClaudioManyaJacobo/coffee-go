@@ -19,6 +19,14 @@ export class Details implements OnInit, OnDestroy {
   type: string = 'movie';
   trailerUrl: SafeResourceUrl | null = null;
   vidfastUrl: SafeResourceUrl | null = null;
+  
+  // ── TV Series variables ─────────────────────────────────────────────────────
+  selectedSeason: any | null = null;
+  seasonEpisodes: any[] = [];
+  isLoadingEpisodes: boolean = false;
+  selectedEpisode: any | null = null;
+  // ────────────────────────────────────────────────────────────────────────────
+
   private routeSub!: Subscription;
 
   constructor(
@@ -39,14 +47,31 @@ export class Details implements OnInit, OnDestroy {
 
   loadDetails(id: string, type: string) {
     this.media = null;
+    this.selectedSeason = null;
+    this.seasonEpisodes = [];
+    this.selectedEpisode = null;
+    this.vidfastUrl = null;
+    this.trailerUrl = null;
+    
     window.scrollTo(0, 0);
-    this.mediaService.getDetails(id, type).subscribe(data => {
-      // Forzar que el similar sepa su tipo
-      if (data.similar?.results) {
-        data.similar.results.forEach(s => s.media_type = type as any);
+    this.mediaService.getDetails(id, type).subscribe({
+      next: (data) => {
+        if (data.similar?.results) {
+          data.similar.results.forEach(s => s.media_type = type as any);
+        }
+        this.media = data;
+        this.extractTrailer();
+
+        // Auto-seleccionar primer temporada si es serie y tiene temporadas
+        if (type === 'tv' && this.media?.seasons && this.media.seasons.length > 0) {
+          // A veces la temporada 0 son Especiales, mejor la primera que tenga episodios
+          const firstSeason = this.media.seasons.find(s => s.season_number > 0) || this.media.seasons[0];
+          this.selectSeason(firstSeason);
+        }
+      },
+      error: () => {
+        // Redirigir si hay error de carga inicial
       }
-      this.media = data;
-      this.extractTrailer();
     });
   }
 
@@ -54,11 +79,12 @@ export class Details implements OnInit, OnDestroy {
     this.trailerUrl = null;
     this.vidfastUrl = null;
     
-    // Generación del reproductor automático Vidfast
-    if (this.media?.id) {
-       const url = `https://vidfast.pro/${this.type}/${this.media.id}?autoPlay=true`;
+    // Generación del reproductor automático Vidfast SOLO PARA PELICULAS
+    if (this.media?.id && this.type === 'movie') {
+       const url = `https://vidfast.pro/movie/${this.media.id}?autoPlay=false`;
        this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
+    // Si es serie, el URL se generará al elegir un episodio
 
     if (this.media?.videos?.results) {
       const trailer = this.media.videos.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
@@ -67,6 +93,44 @@ export class Details implements OnInit, OnDestroy {
       }
     }
   }
+
+  // ── Manejo de Series (Temporadas y Episodios) ───────────────────────────────
+  selectSeason(season: any) {
+    if (!this.media?.id) return;
+    this.selectedSeason = season;
+    this.selectedEpisode = null; // Reiniciar
+    this.vidfastUrl = null;      // Ocultar player hasta elegir episodio
+    this.isLoadingEpisodes = true;
+    this.seasonEpisodes = [];
+
+    this.mediaService.getSeasonDetails(this.media.id, season.season_number).subscribe({
+      next: (data) => {
+        // TMDB devuelve max ~25 episodios de golpe, no pesa casi nada.
+        this.seasonEpisodes = data.episodes || [];
+        this.isLoadingEpisodes = false;
+        
+        // Hacer scroll suave a la sección de episodios
+        setTimeout(() => {
+          document.getElementById('episodes-section')?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      },
+      error: () => {
+        this.isLoadingEpisodes = false;
+      }
+    });
+  }
+
+  selectEpisode(episode: any) {
+    if (!this.media?.id || !this.selectedSeason) return;
+    this.selectedEpisode = episode;
+    const url = `https://vidfast.pro/tv/${this.media.id}/${this.selectedSeason.season_number}/${episode.episode_number}?autoPlay=true`;
+    this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+    setTimeout(() => {
+      document.getElementById('vidfast-player-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+  // ────────────────────────────────────────────────────────────────────────────
 
   getYear(dateStr?: string): string {
     return dateStr ? new Date(dateStr).getFullYear().toString() : 'N/A';

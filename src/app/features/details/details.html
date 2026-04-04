@@ -2,32 +2,32 @@
 
   <!-- Backdrop / Fondo -->
   <div class="backdrop-wrapper" *ngIf="media.backdrop_path">
-    <img
-      class="backdrop-img"
-      [src]="'https://image.tmdb.org/t/p/original' + media.backdrop_path"
-      [alt]="media.title || media.name"
-    />
+    <img class="backdrop-img" [src]="'https://image.tmdb.org/t/p/original' + media.backdrop_path"
+      [alt]="media.title || media.name" />
   </div>
 
   <!-- Backdrop Placeholder: sin imagen de fondo -->
   <div class="backdrop-wrapper backdrop-placeholder" *ngIf="!media.backdrop_path">
     <div class="backdrop-no-coffee">
       <div class="backdrop-no-coffee__icons">
-        <svg class="cup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="cup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
           <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
           <line x1="6" x2="6" y1="2" y2="4"></line>
           <line x1="10" x2="10" y1="2" y2="4"></line>
           <line x1="14" x2="14" y1="2" y2="4"></line>
         </svg>
-        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
           <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
           <line x1="6" x2="6" y1="2" y2="4"></line>
           <line x1="10" x2="10" y1="2" y2="4"></line>
           <line x1="14" x2="14" y1="2" y2="4"></line>
         </svg>
-        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
           <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
           <line x1="6" x2="6" y1="2" y2="4"></line>
@@ -43,21 +43,34 @@
   <div class="content-container">
     <div class="media-header">
       <div class="poster">
-        <img *ngIf="media.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path" [alt]="media.title || media.name" />
+        <img *ngIf="media.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path"
+          [alt]="media.title || media.name" />
         <!-- Poster Placeholder -->
         <div *ngIf="!media.poster_path" class="nc-poster">
           <div class="nc-poster__icons">
-            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line>
+              <line x1="10" x2="10" y1="2" y2="4"></line>
+              <line x1="14" x2="14" y1="2" y2="4"></line>
             </svg>
-            <svg class="nc-cup nc-cup--main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            <svg class="nc-cup nc-cup--main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line>
+              <line x1="10" x2="10" y1="2" y2="4"></line>
+              <line x1="14" x2="14" y1="2" y2="4"></line>
             </svg>
-            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line>
+              <line x1="10" x2="10" y1="2" y2="4"></line>
+              <line x1="14" x2="14" y1="2" y2="4"></line>
             </svg>
           </div>
           <span class="nc-poster__label">NO COFFEE</span>
@@ -67,7 +80,12 @@
       <div class="info">
         <h1 class="title">{{ media.title || media.name }}</h1>
         <div class="meta">
-          <span class="rating"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;margin-right:4px;vertical-align:-2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>{{ (media.vote_average | number:'1.1-1') || '0.0' }}</span>
+          <span class="rating"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"
+              style="display:inline;margin-right:4px;vertical-align:-2px;">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+              </polygon>
+            </svg>{{ (media.vote_average | number:'1.1-1') || '0.0' }}</span>
           <span class="year">{{ getYear(media.release_date || media.first_air_date) }}</span>
           <span class="genre" *ngFor="let g of media.genres">{{ g.name }}</span>
         </div>
@@ -81,10 +99,15 @@
       <div class="carousel-wrapper">
         <div class="carousel-track right-to-left" [class.scroll-active]="(media.credits?.cast?.length || 0) > 5">
           <div class="cast-card" *ngFor="let actor of media.credits?.cast | slice:0:15">
-            <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" [alt]="actor.name">
+            <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path"
+              [alt]="actor.name">
             <div *ngIf="!actor.profile_path" class="no-photo">
               <span>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
               </span>
             </div>
             <div class="actor-info">
@@ -95,10 +118,15 @@
           <!-- Loop Doble para Efecto Infinito -->
           <ng-container *ngIf="(media.credits?.cast?.length || 0) > 5">
             <div class="cast-card" *ngFor="let actor of media.credits?.cast | slice:0:15">
-              <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" [alt]="actor.name">
+              <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path"
+                [alt]="actor.name">
               <div *ngIf="!actor.profile_path" class="no-photo">
                 <span>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
                 </span>
               </div>
               <div class="actor-info">
@@ -116,15 +144,111 @@
       <h2 class="section-title">Tráiler Oficial</h2>
       <div class="video-wrapper">
         <div class="video-container">
-          <iframe [src]="trailerUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe [src]="trailerUrl" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
         </div>
       </div>
     </section>
 
-    <!-- Reproductor Película / Serie (Vidfast) -->
-    <section class="mt-5" *ngIf="vidfastUrl">
+    <!-- Seasons (Solo para Series) -->
+    <section class="mt-5" *ngIf="type === 'tv' && media.seasons?.length">
+      <div class="section-header">
+        <h2 class="section-title">Temporadas</h2>
+
+        <!-- Season Selector Bar (Vacan Style con Posters) -->
+        <div class="premium-season-selector">
+          <div class="seasons-tabs-container">
+            <button *ngFor="let season of media.seasons" class="new-season-btn" (click)="selectSeason(season)"
+              [class.active]="selectedSeason?.season_number === season.season_number">
+              <div class="btn-season-poster">
+                <img *ngIf="season.poster_path" [src]="'https://image.tmdb.org/t/p/w200' + season.poster_path"
+                  [alt]="season.name">
+                <div *ngIf="!season.poster_path" class="poster-fallback">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+                    <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="btn-season-info">
+                <span class="btn-season-num">Temp {{ season.season_number }}</span>
+                <span class="btn-season-name">{{ season.name }}</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Episodios Viewer (Premium Layout) -->
+    <section class="mt-4" id="episodes-section" *ngIf="selectedSeason">
+      <div class="ep-viewer-card glass-effect">
+        <div class="ep-viewer-header">
+          <div class="ep-viewer-title-group">
+            <h3 class="current-season-display">{{ selectedSeason.name }}</h3>
+            <p class="season-stats">{{ seasonEpisodes.length }} episodios • {{ selectedSeason.air_date | date:'yyyy' }}
+            </p>
+          </div>
+
+          <!-- Spinner -->
+          <div class="premium-loader-container" *ngIf="isLoadingEpisodes">
+            <div class="mini-loader"></div>
+            <span>Cargando episodios...</span>
+          </div>
+        </div>
+
+        <div class="ep-viewer-body">
+          <!-- Fallback si no hay episodios -->
+          <div class="ep-empty-state" *ngIf="!isLoadingEpisodes && !seasonEpisodes.length">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>No se encontraron episodios para esta temporada.</p>
+          </div>
+
+          <!-- Lista de Episodios -->
+          <div class="ep-grid-list" *ngIf="!isLoadingEpisodes && seasonEpisodes.length">
+            <div class="premium-ep-card" *ngFor="let ep of seasonEpisodes" (click)="selectEpisode(ep)"
+              [class.active]="selectedEpisode?.id === ep.id" [id]="'ep-' + ep.episode_number">
+
+              <div class="ep-thumb-container">
+                <img *ngIf="ep.still_path" [src]="'https://image.tmdb.org/t/p/w300' + ep.still_path" [alt]="ep.name"
+                  class="ep-thumb-img" />
+                <div *ngIf="!ep.still_path" class="ep-thumb-placeholder">
+                  <span>Ep {{ ep.episode_number }}</span>
+                </div>
+                <div class="ep-card-overlay">
+                  <div class="play-icon-glow"><svg viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg></div>
+                </div>
+              </div>
+
+              <div class="ep-details-content">
+                <div class="ep-meta-row">
+                  <span class="ep-chip">E{{ ep.episode_number }}</span>
+                  <span class="ep-date" *ngIf="ep.air_date">{{ ep.air_date | date:'mediumDate' }}</span>
+                  <span class="ep-time" *ngIf="ep.runtime">{{ ep.runtime }}m</span>
+                </div>
+                <h4 class="ep-card-title">{{ ep.name }}</h4>
+                <p class="ep-card-overview">{{ ep.overview || 'Sin descripción disponible.' }}</p>
+              </div>
+
+              <div class="ep-active-indicator" *ngIf="selectedEpisode?.id === ep.id"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reproductor Película / Serie (Vidfast) - Reubicado arriba de similares para series -->
+    <section class="mt-5" id="vidfast-player-section" *ngIf="vidfastUrl">
       <h2 class="section-title">
-        <span style="color: var(--primary);">▶</span> Ver Completa
+        <span style="color: var(--primary);">▶</span> Reproduciendo: {{ selectedEpisode ? selectedEpisode.name :
+        media.title || media.name }}
       </h2>
       <div class="video-wrapper vidfast-player">
         <div class="video-container">
@@ -133,33 +257,10 @@
       </div>
     </section>
 
-
-    <!-- Seasons (Solo para Series) -->
-    <section class="mt-5" *ngIf="type === 'tv' && media.seasons?.length">
-      <h2 class="section-title">Temporadas ({{ media.number_of_seasons }})</h2>
-      <div class="seasons-grid">
-        <div class="season-card" *ngFor="let season of media.seasons">
-          <img *ngIf="season.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + season.poster_path" [alt]="season.name">
-          <!-- Season Poster Placeholder -->
-          <div *ngIf="!season.poster_path" class="nc-season">
-            <svg class="nc-season__cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
-            </svg>
-            <span class="nc-season__label">NO COFFEE</span>
-          </div>
-          <div class="season-info">
-            <h3>{{ season.name }}</h3>
-            <p *ngIf="season.air_date" class="season-year">{{ season.air_date | date:'yyyy' }}</p>
-            <p class="season-episodes">{{ season.episode_count }} Episodios</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Similar -->
     <section class="mt-5 mb-5" *ngIf="media.similar?.results?.length">
-      <h2 class="section-title">{{ type === 'movie' ? 'Películas Similares recomendadas' : 'Series Similares recomendadas' }}</h2>
+      <h2 class="section-title">{{ type === 'movie' ? 'Películas Similares recomendadas' : 'Series Similares
+        recomendadas' }}</h2>
       <div class="carousel-wrapper">
         <div class="carousel-track right-to-left" [class.scroll-active]="(media.similar?.results?.length || 0) > 4">
           <div class="similar-card-wrapper" *ngFor="let item of media.similar?.results">
