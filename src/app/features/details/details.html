@@ -121,6 +121,19 @@
       </div>
     </section>
 
+    <!-- Reproductor Película / Serie (Vidfast) -->
+    <section class="mt-5" *ngIf="vidfastUrl">
+      <h2 class="section-title">
+        <span style="color: var(--primary);">▶</span> Ver Completa
+      </h2>
+      <div class="video-wrapper vidfast-player">
+        <div class="video-container">
+          <iframe [src]="vidfastUrl" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+
     <!-- Seasons (Solo para Series) -->
     <section class="mt-5" *ngIf="type === 'tv' && media.seasons?.length">
       <h2 class="section-title">Temporadas ({{ media.number_of_seasons }})</h2>

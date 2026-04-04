@@ -18,6 +18,7 @@ export class Details implements OnInit, OnDestroy {
   media: Media | null = null;
   type: string = 'movie';
   trailerUrl: SafeResourceUrl | null = null;
+  vidfastUrl: SafeResourceUrl | null = null;
   private routeSub!: Subscription;
 
   constructor(
@@ -51,6 +52,14 @@ export class Details implements OnInit, OnDestroy {
 
   extractTrailer() {
     this.trailerUrl = null;
+    this.vidfastUrl = null;
+    
+    // Generación del reproductor automático Vidfast
+    if (this.media?.id) {
+       const url = `https://vidfast.pro/${this.type}/${this.media.id}?autoPlay=true`;
+       this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+
     if (this.media?.videos?.results) {
       const trailer = this.media.videos.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
       if (trailer) {
