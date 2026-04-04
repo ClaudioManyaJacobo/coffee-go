@@ -3,17 +3,95 @@
     <div class="logo-box" routerLink="/home">
       <span class="logo gradient-text">CoffeeGo</span>
     </div>
-    
+
     <div class="links-box">
-      <a routerLink="/home" routerLinkActive="active" class="nav-link">Inicio</a>
+      <a routerLink="/home"   routerLinkActive="active" class="nav-link">Inicio</a>
       <a routerLink="/movies" routerLinkActive="active" class="nav-link">Películas</a>
       <a routerLink="/series" routerLinkActive="active" class="nav-link">Series</a>
     </div>
 
     <div class="actions-box">
       <div class="search-bubble">
-        <span class="search-ico">🔍</span>
-        <input type="text" placeholder="Buscar..." class="search-input">
+        <form (submit)="onSearchSubmit($event)" class="search-form">
+          <!-- Icono: lupa normal o spinner sutil cuando carga -->
+          <span class="search-ico" [class.spinning]="isLoading">
+            <svg *ngIf="!isLoading" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <!-- Mini spinner dentro del icono cuando carga -->
+            <svg *ngIf="isLoading" class="spin-icon" width="18" height="18" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <path d="M12 2a10 10 0 1 0 10 10" />
+            </svg>
+          </span>
+
+          <input
+            type="text"
+            [formControl]="searchControl"
+            (focus)="onInputFocus()"
+            (blur)="onInputBlur()"
+            placeholder="Buscar título..."
+            class="search-input"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </form>
+
+        <!-- Dropdown: siempre en DOM, mostrado con clase .visible -->
+        <div
+          class="suggestions-dropdown"
+          [class.visible]="isOpen || (isLoading && (searchControl.value?.length ?? 0) >= 3)"
+          (mousedown)="preventBlur($event)"
+        >
+          <!-- Barra shimmer en el top: visible SOLO cuando está cargando -->
+          <div class="sug-shimmer-bar" *ngIf="isLoading"></div>
+
+          <!-- Resultados: se muestran aunque esté cargando (para actualización suave) -->
+          <ng-container *ngIf="suggestions.length > 0">
+            <div
+              class="suggestion-item"
+              *ngFor="let item of suggestions"
+              (click)="goToDetails(item)"
+            >
+              <img
+                *ngIf="item.poster_path"
+                [src]="'https://image.tmdb.org/t/p/w92' + item.poster_path"
+                [alt]="item.title || item.name"
+                loading="lazy"
+              >
+              <div *ngIf="!item.poster_path" class="sug-no-img">NC</div>
+              <div class="sug-info">
+                <h4>{{ item.title || item.name }}</h4>
+                <div class="sug-meta">
+                  <span class="sug-badge">{{ item.media_type === 'movie' ? 'MOVIE' : 'TV' }}</span>
+                  <span class="sug-year" *ngIf="item.release_date || item.first_air_date">
+                    {{ (item.release_date || item.first_air_date) | slice:0:4 }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="suggestion-footer" (click)="onVerTodos()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              Ver todos los resultados
+            </div>
+          </ng-container>
+
+          <!-- Estado inicial: cargando por primera vez (sin resultados aún) -->
+          <div class="sug-first-load" *ngIf="isLoading && suggestions.length === 0">
+            <div class="sug-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <p class="sug-loading-label">Buscando...</p>
+          </div>
+        </div>
+
       </div>
       <button class="btn-coffee-glow">Premium</button>
     </div>

@@ -9,6 +9,7 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
   backdrop-filter: blur(5px);
+
   &.scrolled {
     background: rgba(10, 9, 8, 0.95);
     backdrop-filter: blur(15px);
@@ -17,6 +18,7 @@
     border-bottom: 1px solid rgba(212, 163, 115, 0.1);
   }
 }
+
 .nav-wrapper {
   width: 90%;
   max-width: 1400px;
@@ -24,18 +26,289 @@
   justify-content: space-between;
   align-items: center;
 }
-.logo { font-size: 2.5rem; font-weight: 900; letter-spacing: -2.5px; cursor: pointer; transition: 0.3s; &:hover { transform: scale(1.05); } }
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -2.5px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { transform: scale(1.05); }
+}
+
 .links-box { display: flex; gap: 3rem; align-items: center; }
+
 .nav-link {
-  color: #ddd; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: 0.3s; cursor: pointer; position: relative;
+  color: #ddd;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: 0.3s;
+  cursor: pointer;
+  position: relative;
+
   &.active, &:hover { color: var(--primary); }
-  &.active::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 100%; height: 3px; background: var(--primary); border-radius: 5px; box-shadow: 0 0 10px var(--primary); }
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--primary);
+  }
 }
+
 .actions-box { display: flex; align-items: center; gap: 2rem; }
+
+/* ── Search bubble ──────────────────────────────────────────────────────────── */
 .search-bubble {
-  background: rgba(255,255,255,0.05); border-radius: 30px; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; transition: 0.3s;
-  &:hover, &:focus-within { background: rgba(255,255,255,0.15); border-color: var(--primary); width: 280px; }
-  .search-ico { font-size: 1.1rem; }
-  .search-input { background: none; border: none; color: #fff; font-family: 'Outfit'; outline: none; width: 130px; transition: 0.3s; }
+  background: rgba(10, 9, 8, 0.4);
+  border-radius: 40px;
+  padding: 8px 20px;
+  border: 1px solid rgba(212, 163, 115, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  position: relative;
+
+  &:hover, &:focus-within {
+    background: rgba(10, 9, 8, 0.85);
+    border-color: var(--primary);
+    width: 320px;
+    box-shadow: 0 0 25px rgba(212, 163, 115, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .search-ico {
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
 }
-.btn-coffee-glow { background: var(--primary); color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(212, 163, 115, 0.2); &:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 25px rgba(212, 163, 115, 0.5); background: #fff; } }
+
+/* Mini spinner en el icono de búsqueda */
+.spin-icon {
+  animation: spin-circle 0.8s linear infinite;
+  transform-origin: center;
+  color: var(--primary);
+  opacity: 0.9;
+
+  @keyframes spin-circle {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+}
+
+.search-form { display: flex; align-items: center; width: 100%; }
+
+.search-input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: 0.3s;
+
+  &::placeholder {
+    color: rgba(255,255,255,0.4);
+    font-weight: 400;
+  }
+}
+
+/* ── Dropdown panel ─────────────────────────────────────────────────────────── */
+.suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 360px;
+  background: rgba(12, 10, 9, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 163, 115, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.03);
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
+
+  /* Oculto por defecto – se muestra con .visible */
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+}
+
+/* ── Shimmer bar (top del panel durante carga) ──────────────────────────────── */
+.sug-shimmer-bar {
+  width: 100%;
+  height: 2px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 163, 115, 0.04) 0%,
+    rgba(212, 163, 115, 0.85) 40%,
+    rgba(255, 215, 160, 1)    50%,
+    rgba(212, 163, 115, 0.85) 60%,
+    rgba(212, 163, 115, 0.04) 100%
+  );
+  background-size: 250% 100%;
+  animation: shimmer 1s linear infinite;
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
+
+/* ── First load (puntos pulsantes cuando no hay resultados aún) ─────────────── */
+.sug-first-load {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 16px 20px;
+  gap: 12px;
+}
+
+.sug-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  span {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: dot-pop 1s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.15s; }
+    &:nth-child(3) { animation-delay: 0.30s; }
+  }
+
+  @keyframes dot-pop {
+    0%, 75%, 100% { opacity: 0.2;  transform: scale(0.75); }
+    40%           { opacity: 1;    transform: scale(1.3); box-shadow: 0 0 12px rgba(212, 163, 115, 0.8); }
+  }
+}
+
+.sug-loading-label {
+  font-size: 0.75rem;
+  color: rgba(212, 163, 115, 0.5);
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin: 0;
+  animation: label-fade 1.3s ease-in-out infinite;
+
+  @keyframes label-fade {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 1; }
+  }
+}
+
+/* ── Suggestion items ───────────────────────────────────────────────────────── */
+.suggestion-item {
+  display: flex;
+  padding: 11px 14px;
+  gap: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+
+  &:hover { background: rgba(212, 163, 115, 0.11); }
+
+  img, .sug-no-img {
+    width: 44px;
+    height: 64px;
+    border-radius: 7px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .sug-no-img {
+    background: rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: var(--primary);
+    border: 1px dashed rgba(212, 163, 115, 0.2);
+  }
+
+  .sug-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    gap: 5px;
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .sug-meta { display: flex; align-items: center; gap: 7px; }
+
+  .sug-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: #000;
+    font-size: 0.58rem;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.6px;
+  }
+
+  .sug-year {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+  }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+.suggestion-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--primary);
+  cursor: pointer;
+  background: rgba(0,0,0,0.3);
+  transition: background 0.2s;
+  letter-spacing: 0.2px;
+  border-top: 1px solid rgba(212, 163, 115, 0.07);
+
+  &:hover { background: rgba(212, 163, 115, 0.12); }
+}

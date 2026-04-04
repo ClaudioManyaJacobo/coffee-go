@@ -1,13 +1,68 @@
 <div class="details-view" *ngIf="media">
-  <div class="backdrop-wrapper" [ngStyle]="{'background-image': media.backdrop_path ? 'url(https://image.tmdb.org/t/p/w1280' + media.backdrop_path + ')' : 'none'}">
-    <div class="backdrop-overlay"></div>
+
+  <!-- Backdrop / Fondo -->
+  <div class="backdrop-wrapper" *ngIf="media.backdrop_path">
+    <img
+      class="backdrop-img"
+      [src]="'https://image.tmdb.org/t/p/original' + media.backdrop_path"
+      [alt]="media.title || media.name"
+    />
+  </div>
+
+  <!-- Backdrop Placeholder: sin imagen de fondo -->
+  <div class="backdrop-wrapper backdrop-placeholder" *ngIf="!media.backdrop_path">
+    <div class="backdrop-no-coffee">
+      <div class="backdrop-no-coffee__icons">
+        <svg class="cup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+          <line x1="6" x2="6" y1="2" y2="4"></line>
+          <line x1="10" x2="10" y1="2" y2="4"></line>
+          <line x1="14" x2="14" y1="2" y2="4"></line>
+        </svg>
+        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+          <line x1="6" x2="6" y1="2" y2="4"></line>
+          <line x1="10" x2="10" y1="2" y2="4"></line>
+          <line x1="14" x2="14" y1="2" y2="4"></line>
+        </svg>
+        <svg class="cup-icon cup-icon--faded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+          <line x1="6" x2="6" y1="2" y2="4"></line>
+          <line x1="10" x2="10" y1="2" y2="4"></line>
+          <line x1="14" x2="14" y1="2" y2="4"></line>
+        </svg>
+      </div>
+      <span class="backdrop-no-coffee__label">NO COFFEE</span>
+      <span class="backdrop-no-coffee__sub">Sin imagen de fondo disponible</span>
+    </div>
   </div>
 
   <div class="content-container">
     <div class="media-header">
       <div class="poster">
         <img *ngIf="media.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path" [alt]="media.title || media.name" />
-        <div *ngIf="!media.poster_path" class="no-poster">Sin Imagen</div>
+        <!-- Poster Placeholder -->
+        <div *ngIf="!media.poster_path" class="nc-poster">
+          <div class="nc-poster__icons">
+            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            </svg>
+            <svg class="nc-cup nc-cup--main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            </svg>
+            <svg class="nc-cup nc-cup--side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            </svg>
+          </div>
+          <span class="nc-poster__label">NO COFFEE</span>
+          <span class="nc-poster__sub">Sin póster</span>
+        </div>
       </div>
       <div class="info">
         <h1 class="title">{{ media.title || media.name }}</h1>
@@ -72,10 +127,13 @@
       <div class="seasons-grid">
         <div class="season-card" *ngFor="let season of media.seasons">
           <img *ngIf="season.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + season.poster_path" [alt]="season.name">
-          <div *ngIf="!season.poster_path" class="no-photo">
-            <span>
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
-            </span>
+          <!-- Season Poster Placeholder -->
+          <div *ngIf="!season.poster_path" class="nc-season">
+            <svg class="nc-season__cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line>
+            </svg>
+            <span class="nc-season__label">NO COFFEE</span>
           </div>
           <div class="season-info">
             <h3>{{ season.name }}</h3>

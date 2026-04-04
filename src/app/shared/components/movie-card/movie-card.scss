@@ -24,6 +24,16 @@
   opacity: 0;
   h3 { margin: 0 0 0.5rem; font-size: 1rem; color: white; line-height: 1.2; font-weight: 800; }
 }
+
+.no-coffee-placeholder {
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, #1a1512 0%, #0a0908 100%);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  color: rgba(212, 163, 115, 0.4);
+  border: 1px dashed rgba(212, 163, 115, 0.2);
+  svg { filter: drop-shadow(0 0 10px rgba(212, 163, 115, 0.2)); margin-bottom: 5px; }
+  .no-coffee-text { font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; color: rgba(212, 163, 115, 0.6); text-shadow: 0 0 15px rgba(212, 163, 115, 0.3); }
+}
 .meta { display: flex; justify-content: space-between; align-items: center; }
 .rating { color: var(--primary); font-weight: 800; font-size: 0.9rem; }
 .year { color: #aaa; font-size: 0.85rem; }

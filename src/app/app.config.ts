@@ -2,7 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
-// Core Application Routes
+// Core de la aplicacion
 import { routes } from './app.routes';
 import { loadingInterceptor } from './services/loading.interceptor';
 import { errorInterceptor } from './services/error.interceptor';
@@ -10,13 +10,13 @@ import { errorInterceptor } from './services/error.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    // Modern Routing with automatic scrolling & component bindings
+    // Rutas de la aplicacion
     provideRouter(
       routes,
       withComponentInputBinding(),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
     ),
-    // High-performance Fetch API for HTTP Client
+    // Interceptores de peticiones
     provideHttpClient(
       withFetch(),
       withInterceptors([loadingInterceptor, errorInterceptor])
