@@ -21,37 +21,54 @@
 
 .nav-wrapper {
   width: 90%;
-  max-width: 1400px;
+  max-width: 1450px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.logo {
-  font-size: 2.5rem;
-  font-weight: 900;
-  letter-spacing: -2.5px;
-  cursor: pointer;
-  transition: 0.3s;
-  &:hover { transform: scale(1.05); }
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12rem; /* ~5cm de separación */
 }
 
-.links-box { display: flex; gap: 3rem; align-items: center; }
+.logo {
+  font-size: 2.3rem; 
+  font-weight: 950;
+  letter-spacing: -2.7px;
+  cursor: pointer;
+  transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &:hover { transform: scale(1.04) rotate(-1deg); }
+}
+
+.link-icon { display: flex; font-size: 1.1rem; }
+
+.nav-links-list {
+  display: flex;
+  flex-direction: row;
+  gap: 3.5rem; /* ~1.5cm de separación */
+  align-items: center;
+}
 
 .nav-link {
   color: #ddd;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.05rem;
   transition: 0.3s;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   position: relative;
+  white-space: nowrap;
 
   &.active, &:hover { color: var(--primary); }
   &.active::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -10px; /* Ajustado debajo del texto */
     left: 0;
     width: 100%;
     height: 3px;
@@ -61,7 +78,12 @@
   }
 }
 
-.actions-box { display: flex; align-items: center; gap: 2rem; }
+.actions-box { 
+  display: flex; 
+  align-items: center; 
+  gap: 2rem; 
+  position: relative; /* Clave para el posicionamiento de sugerencias */
+}
 
 /* ── Search bubble ──────────────────────────────────────────────────────────── */
 .search-bubble {
@@ -128,9 +150,9 @@
 /* ── Dropdown panel ─────────────────────────────────────────────────────────── */
 .suggestions-dropdown {
   position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  width: 360px;
+  top: calc(100% + 20px);
+  right: 0;
+  width: 320px;
   background: rgba(12, 10, 9, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -339,20 +361,9 @@
   }
 }
 
+
 .mobile-search { display: none; }
 .desktop-search { display: flex; }
-
-.links-box {
-  display: flex;
-  gap: 3rem;
-  align-items: center;
-}
-
-@media (max-width: 992px) {
-  .nav-wrapper { width: 95%; }
-  .logo { font-size: 2rem; }
-  .links-box { gap: 1.5rem; }
-}
 
 @media (max-width: 768px) {
   .nav-pro { padding: 1rem 0; }
@@ -412,6 +423,7 @@
     border: 1px solid transparent;
 
     .link-icon {
+      display: flex; /* Asegura que se vea en móvil */
       font-size: 1.4rem;
       filter: grayscale(1);
       transition: 0.3s;

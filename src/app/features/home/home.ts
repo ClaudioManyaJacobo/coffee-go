@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router'; // Router added
 import { MediaService } from '../../services/media.service';
 import { MovieCard } from '../../shared/components/movie-card/movie-card';
 import { Observable, Subscription } from 'rxjs';
@@ -8,7 +9,7 @@ import { Media, TrendingResponse } from '../../core/models/media.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MovieCard],
+  imports: [CommonModule, MovieCard, RouterModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
@@ -22,17 +23,17 @@ export class Home implements OnInit, OnDestroy {
   private carouselTimer: any;
   private dataSub?: Subscription;
 
-  constructor(private mediaService: MediaService) {}
+  constructor(
+    private mediaService: MediaService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.trending$ = this.mediaService.getTrending();
     
-    // Nos suscribimos explícitamente aquí para que al regresar a /home,
-    // si la data ya está cacheada, heroMovie se poble de forma síncrona
-    // en la inicialización sin tener que esperar el pipe async del HTML.
     this.dataSub = this.trending$.subscribe((data) => {
       if (data && data.movies && data.movies.length > 0) {
-        this.heroMovies = data.movies.slice(0, 5); // Tomamos el Top 5
+        this.heroMovies = data.movies.slice(0, 5);
         this.heroMovie = this.heroMovies[this.currentHeroIndex];
         
         if (!this.carouselTimer) {
@@ -47,6 +48,18 @@ export class Home implements OnInit, OnDestroy {
       this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroMovies.length;
       this.heroMovie = this.heroMovies[this.currentHeroIndex];
     }, 5000);
+  }
+
+  onInfoClick(event: any) {
+    const btn = event.currentTarget as HTMLElement;
+    btn.classList.add('glowing-info');
+    setTimeout(() => {
+      btn.classList.remove('glowing-info');
+    }, 3000); // Brilla por 3 segundos
+  }
+
+  goToDetails(movie: Media) {
+    this.router.navigate(['/details', movie.media_type || 'movie', movie.id]);
   }
 
   ngOnDestroy(): void {

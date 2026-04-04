@@ -35,7 +35,6 @@ export class Navbar implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Limpiar input al cambiar de ruta
     this.routerSub = this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe(() => {
@@ -43,11 +42,31 @@ export class Navbar implements OnInit, OnDestroy {
       this.suggestions = [];
       this.isLoading   = false;
       this.isOpen      = false;
-      this.isMenuOpen  = false; // Cerrar menú móvil al navegar
+      this.isMenuOpen  = false;
     });
 
+    // Nueva lógica de búsqueda optimizada con RxJS
     this.valueSub = this.searchControl.valueChanges.subscribe(val => {
-      this.onQueryChange((val ?? '').trim());
+      const query = (val ?? '').trim();
+      if (query.length < 3) {
+        this.suggestions = [];
+        this.isLoading = false;
+        this.isOpen = false;
+        this.cancelSearch();
+        this.cdr.detectChanges();
+      } else {
+        // Mostrar cargando de inmediato y limpiar sugerencias viejas
+        this.isLoading = true;
+        this.isOpen = true;
+        this.suggestions = []; // LIMPIAR PARA NO MOSTRAR RESULTADOS VIEJOS
+        this.cdr.detectChanges();
+        
+        // Debounce manual para evitar saturación
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = setTimeout(() => {
+          this.fetchSuggestions(query);
+        }, 300);
+      }
     });
   }
 
@@ -58,30 +77,6 @@ export class Navbar implements OnInit, OnDestroy {
 
   closeMenu() {
     this.isMenuOpen = false;
-  }
-
-  private onQueryChange(query: string) {
-    // Menos de 3 chars → cerrar todo
-    if (query.length < 3) {
-      clearTimeout(this.debounceTimer);
-      this.cancelSearch();
-      this.isLoading   = false;
-      this.isOpen      = false;
-      this.suggestions = [];
-      this.cdr.detectChanges();
-      return;
-    }
-
-    // Abrir panel con loading de inmediato (sin esperar debounce)
-    this.isLoading = true;
-    this.isOpen    = true;
-    this.cdr.detectChanges();
-
-    // Debounce para no saturar la API mientras el usuario escribe
-    clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => {
-      this.fetchSuggestions(query);
-    }, 200);
   }
 
   private fetchSuggestions(query: string) {
