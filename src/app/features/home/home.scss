@@ -18,11 +18,10 @@
 .hero-actions { display: flex; gap: 1rem; }
 .btn-play { background: #fff; color: #000; border: none; padding: 15px 40px; border-radius: 5px; font-weight: 900; cursor: pointer; transition: 0.3s; &:hover { background: var(--primary); } }
 .btn-info { background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 15px 30px; border-radius: 5px; font-weight: 800; cursor: pointer; }
-
-.content-container { padding: 5rem 5% 10rem; margin-top: -150px; position: relative; z-index: 10; }
-.section-row { margin-bottom: 4rem; }
-.section-row-mt-5 { margin-top: 5rem; margin-bottom: 4rem; }
-.row-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 5px solid var(--primary); padding-left: 1rem; color: #fefae0; }
+.content-container { padding: 2rem 5% 2rem; margin-top: -100px; position: relative; z-index: 10; }
+.section-row { margin-bottom: 2rem; }
+.section-row-mt-5 { margin-bottom: 2rem; }
+.row-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; border-left: 5px solid var(--primary); padding-left: 1rem; color: #fefae0; }
 
 .carousel-wrapper {
   overflow: hidden;

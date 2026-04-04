@@ -5,16 +5,26 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class LoadingService {
-  public isLoading$ = new BehaviorSubject<boolean>(true);
+  private activeRequests = 0;
+  // False inicial para no romper el ciclo en app.component, la animación inicial se controlará aparte de ser necesario
+  public isLoading$ = new BehaviorSubject<boolean>(true); // Se inicia true para la primera carga
 
   show() {
-    this.isLoading$.next(true);
+    this.activeRequests++;
+    if (this.activeRequests === 1) {
+      // Usamos microtask para evitar el ExpressionChangedAfterItHasBeenCheckedError
+      Promise.resolve().then(() => this.isLoading$.next(true)); 
+    }
   }
 
   hide() {
-    // Un pequeño respiro de tiempo para que la vista se acomode totalmente antes de quitar la carga
+    // Retraso defensivo por si hay peticiones secuenciales rápidas
     setTimeout(() => {
-      this.isLoading$.next(false);
-    }, 400);
+      this.activeRequests--;
+      if (this.activeRequests <= 0) {
+        this.activeRequests = 0;
+        Promise.resolve().then(() => this.isLoading$.next(false));
+      }
+    }, 100);
   }
 }

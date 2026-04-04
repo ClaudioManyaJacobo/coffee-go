@@ -1,0 +1,69 @@
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 8rem 2rem 2rem;
+  background: radial-gradient(circle at center, rgba(229, 9, 20, 0.1) 0%, transparent 60%);
+}
+
+.error-content {
+  max-width: 600px;
+  animation: fadeIn 0.5s ease-out;
+  margin-top: 4rem;
+}
+
+.glitch-icon {
+  font-size: 6rem;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 20px rgba(229, 9, 20, 0.4));
+  animation: float 3s ease-in-out infinite;
+}
+
+.gradient-text {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff, #ff4b4b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.error-message {
+  font-size: 1.3rem;
+  color: #a0a0a0;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.btn-retry {
+  background: linear-gradient(135deg, var(--primary), #cc0000);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}

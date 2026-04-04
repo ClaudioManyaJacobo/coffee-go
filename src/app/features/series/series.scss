@@ -1,6 +1,5 @@
 .content-view {
-  padding: 10rem 5% 5rem; /* Ajustado el padding top a 10rem para limpiar el Navbar */
-  min-height: 100vh;
+  padding: 8rem 5% 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -17,7 +16,7 @@
 }
 
 .section-hero {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   text-align: center;
   position: relative;
   
@@ -27,11 +26,13 @@
     margin-bottom: 1rem;
     background: linear-gradient(to right, #ffffff, #aaaaaa);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 
     .accent {
       background: linear-gradient(135deg, var(--primary), #ff4b4b);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
   }
@@ -57,8 +58,8 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  padding: 4rem 0;
-  margin-top: 4rem;
+  padding: 2rem 0;
+  margin-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   .page-current {

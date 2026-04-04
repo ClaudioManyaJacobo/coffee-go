@@ -1,11 +1,11 @@
-<header class="hero-banner" *ngIf="heroMovie" [style.background-image]="'url(https://image.tmdb.org/t/p/original' + heroMovie.backdrop_path + ')'">
+<header class="hero-banner" *ngIf="heroMovie" [style.background-image]="'url(https://image.tmdb.org/t/p/w1280' + heroMovie.backdrop_path + ')'">
   <div class="hero-overlay">
     <div class="hero-content">
-      <span class="badge-new">NUEVO TOP {{ currentHeroIndex + 1 }}</span>
+      <span class="badge-new">LO MEJOR DEL TOP 5 - PUESTO {{ currentHeroIndex + 1 }}</span>
       <h1 class="hero-title">{{ heroMovie.title || heroMovie.name }}</h1>
-      <p class="hero-overview">{{ (heroMovie.overview | slice:0:220) + '...' }}</p>
+      <p class="hero-overview">{{ (heroMovie.overview | slice:0:220) + (heroMovie.overview.length > 220 ? '...' : '') }}</p>
       <div class="hero-actions">
-        <button class="btn-play">▶ REPRODUCIR</button>
+        <button class="btn-play">▶ REPRODUCIR AHORA</button>
         <button class="btn-info">ⓘ INFO</button>
       </div>
     </div>
