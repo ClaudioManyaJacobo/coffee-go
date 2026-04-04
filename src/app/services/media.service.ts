@@ -7,7 +7,7 @@ import { Media, PaginatedResult, TrendingResponse } from '../core/models/media.m
   providedIn: 'root'
 })
 export class MediaService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://back-coffee-go.onrender.com/api';
 
   // Caché interna para evitar peticiones redundantes
   private cacheTrending$: Observable<TrendingResponse> | null = null;
