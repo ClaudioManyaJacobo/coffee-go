@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'; // Router added
 import { MediaService } from '../../services/media.service';
+import { HashService } from '../../services/hash.service';
 import { MovieCard } from '../../shared/components/movie-card/movie-card';
 import { Observable, Subscription } from 'rxjs';
 import { Media, TrendingResponse } from '../../core/models/media.model';
@@ -22,6 +23,7 @@ export class Home implements OnInit, OnDestroy {
   
   private carouselTimer: any;
   private dataSub?: Subscription;
+  private hashService = inject(HashService);
 
   constructor(
     private mediaService: MediaService,
@@ -59,7 +61,8 @@ export class Home implements OnInit, OnDestroy {
   }
 
   goToDetails(movie: Media) {
-    this.router.navigate(['/details', movie.media_type || 'movie', movie.id]);
+    const hashedId = this.hashService.encode(movie.id);
+    this.router.navigate(['/details', movie.media_type || 'movie', hashedId]);
   }
 
   ngOnDestroy(): void {

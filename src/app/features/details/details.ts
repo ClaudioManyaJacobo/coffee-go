@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { MediaService } from '../../services/media.service';
+import { HashService } from '../../services/hash.service';
 import { MovieCard } from '../../shared/components/movie-card/movie-card';
 import { Media } from '../../core/models/media.model';
 
@@ -28,6 +29,7 @@ export class Details implements OnInit, OnDestroy {
   // ────────────────────────────────────────────────────────────────────────────
 
   private routeSub!: Subscription;
+  private hashService = inject(HashService);
 
   constructor(
     private route: ActivatedRoute,
@@ -38,9 +40,12 @@ export class Details implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe(params => {
       this.type = params.get('type') || 'movie';
-      const id = params.get('id');
-      if (id) {
-        this.loadDetails(id, this.type);
+      const hashedId = params.get('id');
+      
+      if (hashedId) {
+        // Desofuscamos el ID antes de usarlo
+        const realId = this.hashService.decode(hashedId);
+        this.loadDetails(realId, this.type);
       }
     });
   }

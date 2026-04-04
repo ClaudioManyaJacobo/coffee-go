@@ -1,4 +1,4 @@
-<div class="movie-card premium-card" [routerLink]="['/details', movie.media_type || (movie.title ? 'movie' : 'tv'), movie.id]">
+<div class="movie-card premium-card" [routerLink]="['/details', mediaType, hashedId]">
   <img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title || movie.name">
   <div *ngIf="!movie.poster_path" class="no-coffee-placeholder">
     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
