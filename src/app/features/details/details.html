@@ -1,0 +1,107 @@
+<div class="details-view" *ngIf="media">
+  <div class="backdrop-wrapper" [ngStyle]="{'background-image': media.backdrop_path ? 'url(https://image.tmdb.org/t/p/w1280' + media.backdrop_path + ')' : 'none'}">
+    <div class="backdrop-overlay"></div>
+  </div>
+
+  <div class="content-container">
+    <div class="media-header">
+      <div class="poster">
+        <img *ngIf="media.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path" [alt]="media.title || media.name" />
+        <div *ngIf="!media.poster_path" class="no-poster">Sin Imagen</div>
+      </div>
+      <div class="info">
+        <h1 class="title">{{ media.title || media.name }}</h1>
+        <div class="meta">
+          <span class="rating"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;margin-right:4px;vertical-align:-2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>{{ (media.vote_average | number:'1.1-1') || '0.0' }}</span>
+          <span class="year">{{ getYear(media.release_date || media.first_air_date) }}</span>
+          <span class="genre" *ngFor="let g of media.genres">{{ g.name }}</span>
+        </div>
+        <p class="overview">{{ media.overview || 'Sinopsis no disponible en este momento.' }}</p>
+      </div>
+    </div>
+
+    <!-- Actores Principales -->
+    <section class="mt-5" *ngIf="media.credits?.cast?.length">
+      <h2 class="section-title">Reparto Principal</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-track right-to-left" [class.scroll-active]="(media.credits?.cast?.length || 0) > 5">
+          <div class="cast-card" *ngFor="let actor of media.credits?.cast | slice:0:15">
+            <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" [alt]="actor.name">
+            <div *ngIf="!actor.profile_path" class="no-photo">
+              <span>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+            </div>
+            <div class="actor-info">
+              <p class="actor-name">{{ actor.name }}</p>
+              <p class="actor-char">{{ actor.character }}</p>
+            </div>
+          </div>
+          <!-- Loop Doble para Efecto Infinito -->
+          <ng-container *ngIf="(media.credits?.cast?.length || 0) > 5">
+            <div class="cast-card" *ngFor="let actor of media.credits?.cast | slice:0:15">
+              <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w185' + actor.profile_path" [alt]="actor.name">
+              <div *ngIf="!actor.profile_path" class="no-photo">
+                <span>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </span>
+              </div>
+              <div class="actor-info">
+                <p class="actor-name">{{ actor.name }}</p>
+                <p class="actor-char">{{ actor.character }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trailer -->
+    <section class="mt-5" *ngIf="trailerUrl">
+      <h2 class="section-title">Tráiler Oficial</h2>
+      <div class="video-wrapper">
+        <div class="video-container">
+          <iframe [src]="trailerUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seasons (Solo para Series) -->
+    <section class="mt-5" *ngIf="type === 'tv' && media.seasons?.length">
+      <h2 class="section-title">Temporadas ({{ media.number_of_seasons }})</h2>
+      <div class="seasons-grid">
+        <div class="season-card" *ngFor="let season of media.seasons">
+          <img *ngIf="season.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + season.poster_path" [alt]="season.name">
+          <div *ngIf="!season.poster_path" class="no-photo">
+            <span>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+            </span>
+          </div>
+          <div class="season-info">
+            <h3>{{ season.name }}</h3>
+            <p *ngIf="season.air_date" class="season-year">{{ season.air_date | date:'yyyy' }}</p>
+            <p class="season-episodes">{{ season.episode_count }} Episodios</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Similar -->
+    <section class="mt-5 mb-5" *ngIf="media.similar?.results?.length">
+      <h2 class="section-title">{{ type === 'movie' ? 'Películas Similares recomendadas' : 'Series Similares recomendadas' }}</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-track right-to-left" [class.scroll-active]="(media.similar?.results?.length || 0) > 4">
+          <div class="similar-card-wrapper" *ngFor="let item of media.similar?.results">
+            <app-movie-card [movie]="item"></app-movie-card>
+          </div>
+          <!-- Loop Doble para Efecto Infinito -->
+          <ng-container *ngIf="(media.similar?.results?.length || 0) > 4">
+            <div class="similar-card-wrapper" *ngFor="let item of media.similar?.results">
+              <app-movie-card [movie]="item"></app-movie-card>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

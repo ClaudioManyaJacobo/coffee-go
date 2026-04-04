@@ -9,6 +9,14 @@ export interface Media {
   release_date?: string;
   first_air_date?: string;
   media_type: 'movie' | 'tv';
+
+  genres?: any[];
+  videos?: { results: any[] };
+  credits?: { cast: any[] };
+  similar?: { results: any[] };
+  seasons?: any[];
+  status?: string;
+  number_of_seasons?: number;
 }
 
 export interface PaginatedResult<T> {

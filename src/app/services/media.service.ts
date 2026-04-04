@@ -59,4 +59,9 @@ export class MediaService {
     }
     return this.cacheDetails.get(key)!;
   }
+
+  // Búsqueda sin caché interno para permitir resultados frescos
+  searchMedia(query: string, page: number = 1): Observable<PaginatedResult<Media>> {
+    return this.http.get<PaginatedResult<Media>>(`${this.apiUrl}/search?q=${query}&page=${page}`);
+  }
 }

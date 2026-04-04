@@ -5,7 +5,7 @@
       <h1 class="hero-title">{{ heroMovie.title || heroMovie.name }}</h1>
       <p class="hero-overview">{{ (heroMovie.overview | slice:0:220) + (heroMovie.overview.length > 220 ? '...' : '') }}</p>
       <div class="hero-actions">
-        <button class="btn-play">▶ REPRODUCIR AHORA</button>
+        <button class="btn-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;margin-right:5px;vertical-align:-4px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> REPRODUCIR AHORA</button>
         <button class="btn-info">ⓘ INFO</button>
       </div>
     </div>
