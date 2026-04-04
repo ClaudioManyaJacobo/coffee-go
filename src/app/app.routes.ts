@@ -5,6 +5,7 @@ import { Series } from './features/series/series';
 import { ErrorComponent } from './features/error/error';
 import { Details } from './features/details/details';
 import { SearchComponent } from './features/search/search';
+import { Thanks } from './features/thanks/thanks';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'series', component: Series },
   { path: 'details/:type/:id', component: Details },
   { path: 'search', component: SearchComponent },
+  { path: 'thanks', component: Thanks },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: 'home' }
 ];
