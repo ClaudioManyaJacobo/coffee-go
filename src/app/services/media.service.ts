@@ -9,7 +9,7 @@ import { Media, PaginatedResult, TrendingResponse } from '../core/models/media.m
 export class MediaService {
   private apiUrl = 'http://localhost:3000/api';
 
-  // Caché de peticiones
+  // Caché interna para evitar peticiones redundantes
   private cacheTrending$: Observable<TrendingResponse> | null = null;
   private cacheMovies: Map<number, Observable<PaginatedResult<Media>>> = new Map();
   private cacheSeries: Map<number, Observable<PaginatedResult<Media>>> = new Map();
@@ -17,6 +17,7 @@ export class MediaService {
 
   constructor(private http: HttpClient) { }
 
+  /** Obtiene las películas y series en tendencia de la semana */
   getTrending(): Observable<TrendingResponse> {
     if (!this.cacheTrending$) {
       this.cacheTrending$ = this.http.get<TrendingResponse>(`${this.apiUrl}/trending`).pipe(
@@ -27,6 +28,7 @@ export class MediaService {
     return this.cacheTrending$;
   }
 
+  /** Obtiene películas populares con paginación */
   getPopularMovies(page: number = 1): Observable<PaginatedResult<Media>> {
     if (!this.cacheMovies.has(page)) {
       const req$ = this.http.get<PaginatedResult<Media>>(`${this.apiUrl}/movies/popular?page=${page}`).pipe(
@@ -38,6 +40,7 @@ export class MediaService {
     return this.cacheMovies.get(page)!;
   }
 
+  /** Obtiene series populares con paginación */
   getPopularSeries(page: number = 1): Observable<PaginatedResult<Media>> {
     if (!this.cacheSeries.has(page)) {
       const req$ = this.http.get<PaginatedResult<Media>>(`${this.apiUrl}/series/popular?page=${page}`).pipe(
@@ -49,6 +52,7 @@ export class MediaService {
     return this.cacheSeries.get(page)!;
   }
 
+  /** Obtiene el detalle completo de un ítem (película o serie) */
   getDetails(id: string | number, type: string = 'movie'): Observable<Media> {
     const key = `${type}-${id}`;
     if (!this.cacheDetails.has(key)) {
@@ -60,11 +64,12 @@ export class MediaService {
     return this.cacheDetails.get(key)!;
   }
 
-  // Búsqueda sin caché interno para permitir resultados frescos
+  /** Búsqueda multiplataforma (no utiliza caché interno para permitir frescura en resultados) */
   searchMedia(query: string, page: number = 1): Observable<PaginatedResult<Media>> {
     return this.http.get<PaginatedResult<Media>>(`${this.apiUrl}/search?q=${query}&page=${page}`);
   }
 
+  /** Obtiene los episodios de una temporada específica de una serie */
   getSeasonDetails(id: string | number, seasonNumber: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/details/tv/${id}/season/${seasonNumber}`);
   }

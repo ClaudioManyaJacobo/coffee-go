@@ -20,7 +20,7 @@ export class Details implements OnInit, OnDestroy {
   trailerUrl: SafeResourceUrl | null = null;
   vidfastUrl: SafeResourceUrl | null = null;
   
-  // ── TV Series variables ─────────────────────────────────────────────────────
+  // ── Variables para Series de TV ─────────────────────────────────────────────
   selectedSeason: any | null = null;
   seasonEpisodes: any[] = [];
   isLoadingEpisodes: boolean = false;
@@ -62,15 +62,15 @@ export class Details implements OnInit, OnDestroy {
         this.media = data;
         this.extractTrailer();
 
-        // Auto-seleccionar primer temporada si es serie y tiene temporadas
+        // Auto-seleccionar la primera temporada si es una serie
         if (type === 'tv' && this.media?.seasons && this.media.seasons.length > 0) {
-          // A veces la temporada 0 son Especiales, mejor la primera que tenga episodios
+          // Priorizamos la primera temporada con episodios (a veces existe temporada 0 de Especiales)
           const firstSeason = this.media.seasons.find(s => s.season_number > 0) || this.media.seasons[0];
           this.selectSeason(firstSeason);
         }
       },
       error: () => {
-        // Redirigir si hay error de carga inicial
+        // Manejar error de carga (ej. redirigir al inicio)
       }
     });
   }
@@ -79,12 +79,12 @@ export class Details implements OnInit, OnDestroy {
     this.trailerUrl = null;
     this.vidfastUrl = null;
     
-    // Generación del reproductor automático Vidfast SOLO PARA PELICULAS
+    // Generación del reproductor automático Vidfast SOLO PARA PELÍCULAS
     if (this.media?.id && this.type === 'movie') {
        const url = `https://vidfast.pro/movie/${this.media.id}?autoPlay=false`;
        this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
-    // Si es serie, el URL se generará al elegir un episodio
+    // Si es serie, el URL se generará al elegir un episodio específico
 
     if (this.media?.videos?.results) {
       const trailer = this.media.videos.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
@@ -98,18 +98,18 @@ export class Details implements OnInit, OnDestroy {
   selectSeason(season: any) {
     if (!this.media?.id) return;
     this.selectedSeason = season;
-    this.selectedEpisode = null; // Reiniciar
-    this.vidfastUrl = null;      // Ocultar player hasta elegir episodio
+    this.selectedEpisode = null; // Reiniciar selección de episodio
+    this.vidfastUrl = null;      // Ocultar reproductor hasta elegir nuevo episodio
     this.isLoadingEpisodes = true;
     this.seasonEpisodes = [];
 
     this.mediaService.getSeasonDetails(this.media.id, season.season_number).subscribe({
       next: (data) => {
-        // TMDB devuelve max ~25 episodios de golpe, no pesa casi nada.
+        // TMDB devuelve la lista completa de episodios de la temporada
         this.seasonEpisodes = data.episodes || [];
         this.isLoadingEpisodes = false;
         
-        // Hacer scroll suave a la sección de episodios
+        // Desplazamiento suave a la sección de episodios
         setTimeout(() => {
           document.getElementById('episodes-section')?.scrollIntoView({ behavior: 'smooth' });
         }, 100);
@@ -126,6 +126,7 @@ export class Details implements OnInit, OnDestroy {
     const url = `https://vidfast.pro/tv/${this.media.id}/${this.selectedSeason.season_number}/${episode.episode_number}?autoPlay=true`;
     this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
+    // Desplazamiento suave al reproductor Vidfast
     setTimeout(() => {
       document.getElementById('vidfast-player-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
