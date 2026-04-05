@@ -6,12 +6,13 @@ import { Subscription } from 'rxjs';
 import { MediaService } from '../../services/media.service';
 import { HashService } from '../../services/hash.service';
 import { MovieCard } from '../../shared/components/movie-card/movie-card';
+import { LanguageTutorialModal } from '../../shared/components/language-tutorial-modal/language-tutorial-modal';
 import { Media } from '../../core/models/media.model';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, MovieCard],
+  imports: [CommonModule, RouterModule, MovieCard, LanguageTutorialModal],
   templateUrl: './details.html',
   styleUrls: ['./details.scss']
 })
@@ -26,7 +27,9 @@ export class Details implements OnInit, OnDestroy {
   seasonEpisodes: any[] = [];
   isLoadingEpisodes: boolean = false;
   selectedEpisode: any | null = null;
+  showTutorial: boolean = false;
   // ────────────────────────────────────────────────────────────────────────────
+
 
   private routeSub!: Subscription;
   private hashService = inject(HashService);
@@ -92,10 +95,9 @@ export class Details implements OnInit, OnDestroy {
     this.trailerUrl = null;
     this.vidfastUrl = null;
     
-    // Generación del reproductor automático Vidfast SOLO PARA PELÍCULAS
+    // Generación del reproductor automático
     if (this.media?.id && this.type === 'movie') {
-       const url = `https://vidfast.pro/movie/${this.media.id}?autoPlay=false`;
-       this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+       this.updateVidfastUrl();
     }
     // Si es serie, el URL se generará al elegir un episodio específico
 
@@ -136,14 +138,28 @@ export class Details implements OnInit, OnDestroy {
   selectEpisode(episode: any) {
     if (!this.media?.id || !this.selectedSeason) return;
     this.selectedEpisode = episode;
-    const url = `https://vidfast.pro/tv/${this.media.id}/${this.selectedSeason.season_number}/${episode.episode_number}?autoPlay=true`;
-    this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.updateVidfastUrl();
 
     // Desplazamiento suave al reproductor Vidfast
     setTimeout(() => {
       document.getElementById('vidfast-player-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   }
+
+  updateVidfastUrl() {
+    if (!this.media?.id) return;
+    const themeColor = 'D4A373'; 
+    let url = '';
+    
+    // Simplificando a reproductor nativo
+    url = this.type === 'movie' 
+      ? `https://vidfast.pro/movie/${this.media.id}?autoPlay=false&theme=${themeColor}&sub=es`
+      : `https://vidfast.pro/tv/${this.media.id}/${this.selectedSeason.season_number}/${this.selectedEpisode.episode_number}?autoPlay=true&theme=${themeColor}&sub=es`;
+
+    this.vidfastUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  toggleTutorial() { this.showTutorial = !this.showTutorial; }
   // ────────────────────────────────────────────────────────────────────────────
 
   getYear(dateStr?: string): string {

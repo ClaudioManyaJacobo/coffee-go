@@ -246,10 +246,28 @@
 
     <!-- Reproductor Película / Serie (Vidfast) - Reubicado arriba de similares para series -->
     <section class="mt-5" id="vidfast-player-section" *ngIf="vidfastUrl">
-      <h2 class="section-title">
-        <span style="color: var(--primary);">▶</span> Reproduciendo: {{ selectedEpisode ? selectedEpisode.name :
-        media.title || media.name }}
-      </h2>
+      <div class="player-header-flex">
+        <h2 class="section-title">
+          <span style="color: var(--primary);">▶</span> Reproduciendo: {{ selectedEpisode ? selectedEpisode.name :
+          media.title || media.name }}
+        </h2>
+        
+        <div class="player-actions">
+           <!-- Tutorial Toggle -->
+           <button class="btn-tutorial" (click)="toggleTutorial()" [class.active]="showTutorial">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <circle cx="12" cy="12" r="10"></circle>
+               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+               <line x1="12" y1="17" x2="12.01" y2="17"></line>
+             </svg>
+             {{ showTutorial ? 'Cerrar Guía' : '¿Audio en Español?' }}
+           </button>
+        </div>
+      </div>
+
+      <!-- Tutorial de Idioma Modal -->
+      <app-language-tutorial-modal *ngIf="showTutorial" (close)="toggleTutorial()"></app-language-tutorial-modal>
+
       <div class="video-wrapper vidfast-player">
         <div class="video-container">
           <iframe [src]="vidfastUrl" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
