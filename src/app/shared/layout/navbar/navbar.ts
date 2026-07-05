@@ -1,5 +1,5 @@
 import {
-  Component, HostListener, OnInit, OnDestroy
+  Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
@@ -17,11 +17,15 @@ import { HashService } from '../../../services/hash.service';
   styleUrls: ['./navbar.scss']
 })
 export class Navbar implements OnInit, OnDestroy {
-  isScrolled    = false;
+  menuOpen = false;
+  menuHover: number | null = null;
   searchControl = new FormControl('');
   suggestions: any[] = [];
   isLoading     = false;
   isOpen        = false;
+  searchModalOpen = false;
+
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private searchSub:  Subscription | null = null;
@@ -42,6 +46,8 @@ export class Navbar implements OnInit, OnDestroy {
       this.suggestions = [];
       this.isLoading   = false;
       this.isOpen      = false;
+      this.menuOpen    = false;
+      this.searchModalOpen = false;
     });
 
     this.valueSub = this.searchControl.valueChanges.subscribe(val => {
@@ -64,12 +70,55 @@ export class Navbar implements OnInit, OnDestroy {
     });
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+
+    if (event.key === 'Escape') {
+      if (this.searchModalOpen) {
+        this.closeSearch();
+      } else if (this.menuOpen) {
+        this.closeMenu();
+      }
+      return;
+    }
+
+    if (event.key === 'm' || event.key === 'M') {
+      if (!isInput && !this.searchModalOpen) {
+        event.preventDefault();
+        this.menuOpen = !this.menuOpen;
+      }
+    }
+  }
+
+  openSearch() {
+    this.menuOpen = false;
+    this.searchModalOpen = true;
+    setTimeout(() => {
+      this.searchInput?.nativeElement?.focus();
+    }, 100);
+  }
+
+  closeSearch() {
+    this.searchModalOpen = false;
+    this.searchControl.setValue('', { emitEvent: false });
+    this.suggestions = [];
+    this.isLoading = false;
+    this.isOpen = false;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+    this.menuHover = null;
+  }
+
   private fetchSuggestions(query: string) {
     this.cancelSearch();
 
     this.searchSub = this.mediaService.searchMedia(query, 1).subscribe({
       next: (data) => {
-        this.suggestions = (data.results ?? []).slice(0, 6);
+        this.suggestions = (data.results ?? []).slice(0, 8);
         this.isLoading = false;
         this.isOpen = this.suggestions.length > 0;
       },
@@ -95,10 +144,6 @@ export class Navbar implements OnInit, OnDestroy {
     this.routerSub?.unsubscribe();
   }
 
-  preventBlur(event: MouseEvent) {
-    event.preventDefault();
-  }
-
   onInputFocus() {
     const q = (this.searchControl.value ?? '').trim();
     if (q.length >= 3 && (this.suggestions.length > 0 || this.isLoading)) {
@@ -113,9 +158,7 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   goToDetails(item: any) {
-    this.isOpen = false;
-    this.searchControl.setValue('', { emitEvent: false });
-    this.suggestions = [];
+    this.closeSearch();
     const hashedId = this.hashService.encode(item.id);
     this.router.navigate(['/details', item.media_type, hashedId]);
   }
@@ -123,17 +166,7 @@ export class Navbar implements OnInit, OnDestroy {
   onVerTodos() {
     const val = this.searchControl.value?.trim();
     if (!val) return;
-    this.isOpen = false;
+    this.closeSearch();
     this.router.navigate(['/search'], { queryParams: { q: val } });
-  }
-
-  onSearchSubmit(event?: Event) {
-    if (event) event.preventDefault();
-    this.onVerTodos();
-  }
-
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
   }
 }

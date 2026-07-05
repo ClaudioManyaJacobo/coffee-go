@@ -1,38 +1,70 @@
-<header class="hero-banner" *ngIf="heroMovie" [style.background-image]="'url(https://image.tmdb.org/t/p/w1280' + heroMovie.backdrop_path + ')'">
+<header class="hero-banner" *ngIf="heroMovie" [style.background-image]="'url(https://image.tmdb.org/t/p/original' + heroMovie.backdrop_path + ')'">
   <div class="hero-overlay">
     <div class="hero-content">
-      <span class="badge-new">LO MEJOR DEL TOP 5 - PUESTO {{ currentHeroIndex + 1 }}</span>
-      <h1 class="hero-title">{{ heroMovie.title || heroMovie.name }}</h1>
-      <p class="hero-overview">{{ (heroMovie.overview | slice:0:220) + (heroMovie.overview.length > 220 ? '...' : '') }}</p>
-      <div class="hero-actions">
-        <button class="btn-play" (click)="heroMovie && goToDetails(heroMovie)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;margin-right:5px;vertical-align:-4px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          VER DETALLE
-        </button>
-        <button class="btn-info" (click)="onInfoClick($event)">ⓘ INFO</button>
-      </div>
+      <h1 class="hero-title" (click)="heroMovie && goToDetails(heroMovie)">{{ heroMovie.title || heroMovie.name }}</h1>
+      <p class="hero-overview">{{ (heroMovie.overview | slice:0:120) + (heroMovie.overview.length > 120 ? '...' : '') }}</p>
     </div>
   </div>
 </header>
 
 <div class="content-container">
   <section class="section-row" *ngIf="trending$ | async as trending">
-    <h2 class="row-title">Tendencias de la Semana</h2>
-    <div class="carousel-wrapper">
-      <div class="carousel-track right-to-left">
-        <app-movie-card *ngFor="let item of trending.movies" [movie]="item"></app-movie-card>
-        <app-movie-card *ngFor="let item of trending.movies" [movie]="item"></app-movie-card> <!-- Duplicado para infinito -->
+    <div class="row-header">
+      <div class="row-indicator"></div>
+      <h2 class="row-title">Tendencias de la Semana</h2>
+    </div>
+    <div class="backdrop-grid">
+      <div class="backdrop-card"
+        *ngFor="let item of trending.movies"
+        [style.background-image]="'url(https://image.tmdb.org/t/p/w780' + item.backdrop_path + ')'"
+        (mouseenter)="onCardHover(item, $event)"
+        (mouseleave)="onCardLeave()"
+        (click)="goToDetails(item)">
       </div>
     </div>
   </section>
 
-  <section class="section-row-mt-5" *ngIf="trending$ | async as trending">
-    <h2 class="row-title">Series Top ClaudMovie.io</h2>
-    <div class="carousel-wrapper">
-      <div class="carousel-track left-to-right">
-        <app-movie-card *ngFor="let item of trending.series" [movie]="item"></app-movie-card>
-        <app-movie-card *ngFor="let item of trending.series" [movie]="item"></app-movie-card> <!-- Duplicado para infinito -->
+  <section class="section-row" *ngIf="trending$ | async as trending">
+    <div class="row-header">
+      <div class="row-indicator"></div>
+      <h2 class="row-title">Series Top ClaudMovie.io</h2>
+    </div>
+    <div class="backdrop-grid">
+      <div class="backdrop-card"
+        *ngFor="let item of trending.series"
+        [style.background-image]="'url(https://image.tmdb.org/t/p/w780' + item.backdrop_path + ')'"
+        (mouseenter)="onCardHover(item, $event)"
+        (mouseleave)="onCardLeave()"
+        (click)="goToDetails(item)">
       </div>
     </div>
   </section>
+</div>
+
+<div class="float-panel"
+     *ngIf="hoveredMovie"
+     [style.top.px]="panelTop"
+     [style.left.px]="panelLeft">
+  <img class="float-poster"
+       [src]="'https://image.tmdb.org/t/p/w185' + hoveredMovie.poster_path"
+       [alt]="hoveredMovie.title || hoveredMovie.name">
+  <div class="float-info">
+    <h3 class="float-title" (click)="goToDetails(hoveredMovie)">{{ hoveredMovie.title || hoveredMovie.name }}</h3>
+    <div class="float-meta">
+      <span class="float-stars">
+        <ng-container *ngFor="let fill of getStarFills(hoveredMovie); let i = index">
+          <svg *ngIf="fill === 1" width="12" height="12" viewBox="0 0 24 24" fill="#f5c518" stroke="none">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <svg *ngIf="fill === 0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.5" style="opacity:0.35">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </ng-container>
+      </span>
+      <span class="float-rating">{{ hoveredMovie.vote_average.toFixed(1) }}</span>
+      <span class="float-type">{{ hoveredMovie.media_type === 'tv' ? 'SERIE' : 'PELÍCULA' }}</span>
+      <span class="float-year">{{ (hoveredMovie.release_date || hoveredMovie.first_air_date) | slice:0:4 }}</span>
+    </div>
+    <p class="float-overview">{{ (hoveredMovie.overview | slice:0:180) + (hoveredMovie.overview.length > 180 ? '...' : '') }}</p>
+  </div>
 </div>
