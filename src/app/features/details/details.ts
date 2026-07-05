@@ -56,7 +56,7 @@ export class Details implements OnInit, OnDestroy {
 
   loadDetails(id: string, type: string) {
     if (!id || id === 'undefined' || id === 'null') {
-      console.error('CoffeeGo Trace: Invalid ID detected, redirecting to home.');
+      console.error('ClaudMovie.io Trace: Invalid ID detected, redirecting to home.');
       this.router.navigate(['/home']);
       return;
     }
@@ -85,7 +85,7 @@ export class Details implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.error('CoffeeGo error loading details:', err);
+        console.error('ClaudMovie.io error loading details:', err);
         this.router.navigate(['/home']);
       }
     });

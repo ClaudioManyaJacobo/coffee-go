@@ -27,7 +27,7 @@
   </section>
 
   <section class="section-row-mt-5" *ngIf="trending$ | async as trending">
-    <h2 class="row-title">Series Top CoffeeGo</h2>
+    <h2 class="row-title">Series Top ClaudMovie.io</h2>
     <div class="carousel-wrapper">
       <div class="carousel-track left-to-right">
         <app-movie-card *ngFor="let item of trending.series" [movie]="item"></app-movie-card>

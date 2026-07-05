@@ -143,7 +143,4 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 768px) {
-  .glass-header .glow-title { font-size: 2.5rem; }
-  .partners-grid { grid-template-columns: 1fr; }
-}
+

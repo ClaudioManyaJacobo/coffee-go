@@ -13,6 +13,7 @@ export class MediaService {
   private cacheMovies: Map<number, Observable<PaginatedResult<Media>>> = new Map();
   private cacheSeries: Map<number, Observable<PaginatedResult<Media>>> = new Map();
   private cacheDetails: Map<string, Observable<Media>> = new Map();
+  private cacheSearch: Map<string, Observable<PaginatedResult<Media>>> = new Map();
 
   constructor(private http: HttpClient) { }
 
@@ -81,13 +82,19 @@ export class MediaService {
 
   /** Búsqueda multiplataforma */
   searchMedia(query: string, page: number = 1): Observable<PaginatedResult<Media>> {
-    return this.http.get<any>(`${this.apiUrl}/search?q=${query}&page=${page}`).pipe(
-      map(res => {
-        const { ok, message, ...data } = res;
-        return data as PaginatedResult<Media>;
-      }),
-      catchError(() => of({ page: 1, results: [], total_pages: 0, total_results: 0 }))
-    );
+    const key = `${query}:${page}`;
+    if (!this.cacheSearch.has(key)) {
+      const req$ = this.http.get<any>(`${this.apiUrl}/search?q=${query}&page=${page}`).pipe(
+        map(res => {
+          const { ok, message, ...data } = res;
+          return data as PaginatedResult<Media>;
+        }),
+        shareReplay({ bufferSize: 1, refCount: false }),
+        catchError(() => of({ page: 1, results: [], total_pages: 0, total_results: 0 }))
+      );
+      this.cacheSearch.set(key, req$);
+    }
+    return this.cacheSearch.get(key)!;
   }
 
   /** Obtiene los episodios de una temporada específica de una serie */

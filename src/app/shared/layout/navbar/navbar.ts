@@ -1,5 +1,5 @@
 import {
-  Component, HostListener, OnInit, OnDestroy, ChangeDetectorRef
+  Component, HostListener, OnInit, OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
@@ -21,10 +21,9 @@ export class Navbar implements OnInit, OnDestroy {
   searchControl = new FormControl('');
   suggestions: any[] = [];
   isLoading     = false;
-  isOpen        = false; // Sugerencias de búsqueda
-  isMenuOpen    = false; // Menú móvil (hamburguesa)
+  isOpen        = false;
 
-  private debounceTimer: any = null;
+  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private searchSub:  Subscription | null = null;
   private valueSub:   Subscription | null = null;
   private routerSub:  Subscription | null = null;
@@ -32,7 +31,6 @@ export class Navbar implements OnInit, OnDestroy {
   constructor(
     private mediaService: MediaService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
     private hashService: HashService
   ) {}
 
@@ -44,10 +42,8 @@ export class Navbar implements OnInit, OnDestroy {
       this.suggestions = [];
       this.isLoading   = false;
       this.isOpen      = false;
-      this.isMenuOpen  = false;
     });
 
-    // Nueva lógica de búsqueda optimizada con RxJS
     this.valueSub = this.searchControl.valueChanges.subscribe(val => {
       const query = (val ?? '').trim();
       if (query.length < 3) {
@@ -55,16 +51,12 @@ export class Navbar implements OnInit, OnDestroy {
         this.isLoading = false;
         this.isOpen = false;
         this.cancelSearch();
-        this.cdr.detectChanges();
       } else {
-        // Mostrar cargando de inmediato y limpiar sugerencias viejas
         this.isLoading = true;
         this.isOpen = true;
-        this.suggestions = []; // LIMPIAR PARA NO MOSTRAR RESULTADOS VIEJOS
-        this.cdr.detectChanges();
-        
-        // Debounce manual para evitar saturación
-        clearTimeout(this.debounceTimer);
+        this.suggestions = [];
+
+        clearTimeout(this.debounceTimer!);
         this.debounceTimer = setTimeout(() => {
           this.fetchSuggestions(query);
         }, 300);
@@ -72,34 +64,19 @@ export class Navbar implements OnInit, OnDestroy {
     });
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    if (this.isMenuOpen) this.isOpen = false; // Cerrar búsqueda si abrimos menú
-  }
-
-  closeMenu() {
-    this.isMenuOpen = false;
-  }
-
   private fetchSuggestions(query: string) {
-    // Cancelar petición anterior en vuelo
     this.cancelSearch();
 
     this.searchSub = this.mediaService.searchMedia(query, 1).subscribe({
       next: (data) => {
-        this.suggestions = (data.results ?? [])
-          .filter((r: any) => r.media_type === 'movie' || r.media_type === 'tv')
-          .slice(0, 6);
+        this.suggestions = (data.results ?? []).slice(0, 6);
         this.isLoading = false;
-        // Mantenemos abierto si hay resultados; si no hay, cerramos limpiamente
         this.isOpen = this.suggestions.length > 0;
-        this.cdr.detectChanges();
       },
       error: () => {
         this.isLoading   = false;
         this.isOpen      = false;
         this.suggestions = [];
-        this.cdr.detectChanges();
       }
     });
   }
@@ -112,13 +89,12 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    clearTimeout(this.debounceTimer);
+    clearTimeout(this.debounceTimer!);
     this.cancelSearch();
     this.valueSub?.unsubscribe();
     this.routerSub?.unsubscribe();
   }
 
-  /** Evita que el blur cierre el panel antes de procesar el click */
   preventBlur(event: MouseEvent) {
     event.preventDefault();
   }
@@ -127,15 +103,13 @@ export class Navbar implements OnInit, OnDestroy {
     const q = (this.searchControl.value ?? '').trim();
     if (q.length >= 3 && (this.suggestions.length > 0 || this.isLoading)) {
       this.isOpen = true;
-      this.cdr.detectChanges();
     }
   }
 
   onInputBlur() {
     setTimeout(() => {
       this.isOpen = false;
-      this.cdr.detectChanges();
-    }, 220);
+    }, 200);
   }
 
   goToDetails(item: any) {
