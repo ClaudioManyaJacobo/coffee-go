@@ -25,6 +25,11 @@ export class Navbar implements OnInit, OnDestroy {
   isOpen        = false;
   searchModalOpen = false;
 
+  getDistance(idx: number): number {
+    if (this.menuHover === null) return -1;
+    return Math.abs(this.menuHover - idx);
+  }
+
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;

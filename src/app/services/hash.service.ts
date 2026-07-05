@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class HashService {
   /**
-   * ClaudMovie.io Secure ID System (Stable Edition)
+   * GiMovie Secure ID System (Stable Edition)
    * Utiliza Base64-URL Safe para garantizar que todos los IDs,
    * incluyendo los de sugerencias, funcionen perfectamente.
    */
@@ -49,7 +49,7 @@ export class HashService {
       }
       return decoded;
     } catch (e) {
-      console.error('ClaudMovie.io Trace: Decode failed', e);
+      console.error('GiMovie Trace: Decode failed', e);
       return '';
     }
   }

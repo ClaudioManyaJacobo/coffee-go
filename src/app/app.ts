@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 
 // Layout & Components
 import { Navbar } from './shared/layout/navbar/navbar';
-import { Footer } from './shared/layout/footer/footer';
 import { Loading } from './shared/components/loading/loading';
 import { LoadingService } from './services/loading.service';
 
@@ -15,7 +14,6 @@ import { LoadingService } from './services/loading.service';
     CommonModule, 
     RouterModule, 
     Navbar, 
-    Footer, 
     Loading
   ],
   templateUrl: './app.html',

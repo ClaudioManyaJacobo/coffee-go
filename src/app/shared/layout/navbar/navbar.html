@@ -9,43 +9,41 @@
   <div class="menu-backdrop"></div>
   <div class="menu-center" (click)="$event.stopPropagation()">
 
-    <div class="menu-logo">
-      <svg width="32" height="26" viewBox="0 0 24 20" fill="none">
-        <rect x="1" y="1" width="22" height="13" rx="2" stroke="var(--primary)" stroke-width="1.5"/>
-        <path d="M5 5 L9 5 L5 9" stroke="var(--primary)" stroke-width="1" opacity="0.5"/>
-        <path d="M11 14 V16" stroke="var(--primary)" stroke-width="1.5"/>
-        <path d="M7 16 H17" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span class="menu-logo-text">ClaudMovie.io</span>
-    </div>
-
-    <div class="menu-grid">
-      <a class="menu-item" routerLink="/home" (click)="closeMenu()" (mouseenter)="menuHover = 0" (mouseleave)="menuHover = null" [class.hovered]="menuHover === 0">
-        <div class="menu-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
+    <div class="menu-rect">
+      <a class="menu-item" routerLink="/home" (click)="closeMenu()" 
+         (mouseenter)="menuHover = 0" (mouseleave)="menuHover = null"
+         [class.hovered-active]="getDistance(0) === 0"
+         [class.hovered-near]="getDistance(0) === 1"
+         [class.hovered-far]="getDistance(0) === 2">
         <span class="menu-label">Inicio</span>
+        <img src="home.png" alt="Inicio" class="menu-icon-img">
       </a>
 
-      <a class="menu-item" routerLink="/movies" (click)="closeMenu()" (mouseenter)="menuHover = 1" (mouseleave)="menuHover = null" [class.hovered]="menuHover === 1">
-        <div class="menu-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M17 3v18"/><path d="M3 7h4"/><path d="M3 12h4"/><path d="M3 17h4"/><path d="M17 7h4"/><path d="M17 12h4"/><path d="M17 17h4"/></svg>
-        </div>
+      <a class="menu-item" routerLink="/movies" (click)="closeMenu()" 
+         (mouseenter)="menuHover = 1" (mouseleave)="menuHover = null"
+         [class.hovered-active]="getDistance(1) === 0"
+         [class.hovered-near]="getDistance(1) === 1"
+         [class.hovered-far]="getDistance(1) === 2">
         <span class="menu-label">Películas</span>
+        <img src="movies.png" alt="Películas" class="menu-icon-img">
       </a>
 
-      <a class="menu-item" routerLink="/series" (click)="closeMenu()" (mouseenter)="menuHover = 2" (mouseleave)="menuHover = null" [class.hovered]="menuHover === 2">
-        <div class="menu-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
-        </div>
+      <a class="menu-item" routerLink="/series" (click)="closeMenu()" 
+         (mouseenter)="menuHover = 2" (mouseleave)="menuHover = null"
+         [class.hovered-active]="getDistance(2) === 0"
+         [class.hovered-near]="getDistance(2) === 1"
+         [class.hovered-far]="getDistance(2) === 2">
         <span class="menu-label">Series</span>
+        <img src="series.png" alt="Series" class="menu-icon-img">
       </a>
 
-      <div class="menu-item" (click)="openSearch()" (mouseenter)="menuHover = 3" (mouseleave)="menuHover = null" [class.hovered]="menuHover === 3">
-        <div class="menu-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </div>
+      <div class="menu-item" (click)="openSearch()" 
+           (mouseenter)="menuHover = 3" (mouseleave)="menuHover = null"
+           [class.hovered-active]="getDistance(3) === 0"
+           [class.hovered-near]="getDistance(3) === 1"
+           [class.hovered-far]="getDistance(3) === 2">
         <span class="menu-label">Buscar</span>
+        <img src="search.png" alt="Buscar" class="menu-icon-img">
       </div>
     </div>
 

@@ -16,7 +16,7 @@
   background: rgba(15, 15, 15, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(14, 165, 233, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(249, 115, 22, 0.1);
   max-width: 480px;
   width: 100%;
 
@@ -141,12 +141,12 @@
   display: inline-flex;
   align-items: center;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.25);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.25);
 
   &:hover {
     background: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
   }
 
   &:active {

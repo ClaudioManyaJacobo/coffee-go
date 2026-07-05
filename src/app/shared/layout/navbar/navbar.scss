@@ -1,71 +1,60 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Floating Menu Trigger
+   GiMovie – Navbar
+   ───────────────────────────────────────────────────────────────────────────
+   Floating trigger button  ·  Full-screen overlay menu  ·  Search modal
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Menu Trigger Button ────────────────────────────────────────────────── */
 .menu-trigger {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 9999;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(18,18,18,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-
-  &:hover {
-    transform: scale(1.1);
-    background: rgba(14, 165, 233, 0.2);
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 0 24px rgba(14, 165, 233, 0.2);
-  }
+  transition: background 0.2s, border-color 0.2s;
 
   .trigger-hint {
     position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 20px;
-    height: 20px;
-    background: var(--primary);
-    color: #fff;
-    border-radius: 5px;
-    font-size: 0.6rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    bottom: -18px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    font-family: Inter, sans-serif;
     letter-spacing: 0.5px;
+  }
+
+  &:hover {
+    background: rgba(249,115,22,0.2);
+    border-color: var(--primary);
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   Full-Screen Menu Overlay
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ── Full-Screen Overlay ────────────────────────────────────────────────── */
 .menu-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.2s ease;
 }
 
 .menu-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 .menu-center {
@@ -74,350 +63,323 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  z-index: 1;
-  animation: menuZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes menuZoom {
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
 }
 
 /* ── Logo ────────────────────────────────────────────────────────────────── */
 .menu-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  opacity: 0.6;
+
+  img {
+    border-radius: 4px;
+  }
+
+  .menu-logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    font-family: Inter, sans-serif;
+  }
 }
 
-.menu-logo-text {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: -0.5px;
-}
-
-/* ── Menu Grid ───────────────────────────────────────────────────────────── */
-.menu-grid {
+/* ── Single Rectangle Container ─────────────────────────────────────────── */
+.menu-rect {
   display: flex;
-  gap: 20px;
+  align-items: flex-end; /* Align elements to the bottom like macOS dock */
+  gap: 16px;             /* Maintain clear distance between items */
+  padding: 10px 24px;
+  background: rgba(20, 20, 20, 0.45); /* Very clean glassy macOS-style dock shelf */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;   /* Highly rounded dock shelf */
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: padding 0.3s ease;
 }
 
+/* ── Menu Item ──────────────────────────────────────────────────────────── */
 .menu-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  justify-content: flex-end; /* Align the icon to the bottom of the slot */
+  height: 140px;             /* Elevated container to make room for large icons & floating labels */
+  width: auto;
+  padding: 0 10px 10px 10px; /* Base padding at the bottom */
   cursor: pointer;
   text-decoration: none;
-  width: 120px;
-  padding: 28px 16px;
-  border-radius: 16px;
-  border: 1.5px solid transparent;
-  background: rgba(255, 255, 255, 0.03);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  background: transparent !important; /* Completely clean, no ugly grey box behind icons */
+  border: none !important;
 
-  &:hover,
-  &.hovered {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-6px);
+  .menu-icon-img {
+    width: 80px;            /* Substantially larger icons as requested */
+    height: 80px;
+    transform-origin: bottom center;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35)); /* Drop shadow directly on the icon art */
+  }
 
-    .menu-icon {
-      transform: scale(1.35);
-      color: #fff;
-      filter: drop-shadow(0 0 16px rgba(14, 165, 233, 0.3));
+  .menu-label {
+    position: absolute;
+    bottom: 125px;           /* Floating beautifully above the enlarged icon */
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+    z-index: 100;
+  }
+
+  /* macOS Dock fisheye effect logic without any individual card backgrounds */
+  &.hovered-active {
+    color: var(--primary);
+
+    .menu-icon-img {
+      transform: scale(1.48); /* 1.48x growth on active */
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5));
     }
 
     .menu-label {
       opacity: 1;
-      transform: translateY(0);
-      color: #fff;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  &.hovered-near {
+    color: rgba(255, 255, 255, 0.85);
+
+    .menu-icon-img {
+      transform: scale(1.24); /* 1.24x growth on neighbor */
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    }
+  }
+
+  &.hovered-far {
+    color: rgba(255, 255, 255, 0.7);
+
+    .menu-icon-img {
+      transform: scale(1.1); /* 1.1x growth on secondary neighbor */
+      filter: drop-shadow(0 9px 18px rgba(0, 0, 0, 0.4));
     }
   }
 }
 
-.menu-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.menu-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: all 0.25s ease;
-  white-space: nowrap;
-}
-
-/* ── Footer hint ─────────────────────────────────────────────────────────── */
+/* ── Footer Hint ─────────────────────────────────────────────────────────── */
 .menu-footer {
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+  font-family: Inter, sans-serif;
 
   kbd {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 8px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-block;
+    padding: 1px 6px;
     border-radius: 4px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: 'Inter', monospace;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 2px;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Search Modal Overlay
+   SEARCH MODAL
    ═══════════════════════════════════════════════════════════════════════════ */
+
 .search-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(6px);
-  z-index: 999999;
+  z-index: 9999;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 15vh;
-  animation: fadeIn 0.15s ease;
+  padding-top: 12vh;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .search-modal {
   width: 580px;
-  max-width: 90vw;
-  animation: modalSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalSlideUp {
-  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  max-width: 92vw;
+  background: #121212;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
 }
 
 .search-modal-inner {
-  background: rgba(18, 18, 24, 0.96);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  padding: 20px 0;
 }
 
-/* ── Input field ─────────────────────────────────────────────────────────── */
+/* ── Field ──────────────────────────────────────────────────────────────── */
 .search-modal-field {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 22px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .search-modal-icon {
-  color: rgba(255, 255, 255, 0.4);
-  display: flex;
-  align-items: center;
   flex-shrink: 0;
+  color: rgba(255,255,255,0.25);
 }
 
 .search-modal-input {
-  background: none;
+  flex: 1;
+  background: transparent;
   border: none;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
   outline: none;
-  width: 100%;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.35);
-  }
+  color: #fff;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  &::placeholder { color: rgba(255,255,255,0.25); }
 }
 
 .search-modal-spinner {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-top-color: #fff;
+  border: 2px solid rgba(255,255,255,0.08);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
 
 .search-modal-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255, 255, 255, 0.06);
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s;
   flex-shrink: 0;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-  }
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s;
+  &:hover { color: #fff; }
 }
 
-/* ── Suggestions ─────────────────────────────────────────────────────────── */
+/* ── Suggestions ────────────────────────────────────────────────────────── */
 .search-modal-suggestions {
-  max-height: 400px;
+  max-height: 420px;
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.08) transparent;
 }
 
 .suggestion-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 22px;
+  gap: 12px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: background 0.12s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-
-  &:last-of-type { border-bottom: none; }
-  &:hover { background: rgba(255, 255, 255, 0.04); }
+  transition: background 0.15s;
+  &:hover { background: rgba(249,115,22,0.08); }
 }
 
 .sug-poster {
-  width: 42px;
-  height: 58px;
+  width: 40px;
+  height: 60px;
   border-radius: 4px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .sug-no-poster {
-  width: 42px;
-  height: 58px;
+  width: 40px;
+  height: 60px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1e1e1e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
   flex-shrink: 0;
 }
 
-.sug-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  overflow: hidden;
-
-  h4 {
-    margin: 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.sug-info h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  font-family: Inter, sans-serif;
 }
 
 .sug-meta {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
+  margin-top: 4px;
 }
 
 .sug-badge {
-  font-size: 0.6rem;
+  font-size: 9px;
   font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 3px;
-  letter-spacing: 0.4px;
-
-  &.movie {
-    background: rgba(14, 165, 233, 0.15);
-    color: var(--primary);
-    border: 1px solid rgba(14, 165, 233, 0.25);
-  }
-
-  &.tv {
-    background: rgba(59, 130, 246, 0.12);
-    color: #60a5fa;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-  }
+  letter-spacing: 0.8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  &.movie { background: var(--primary); color: #fff; }
+  &.tv    { background: var(--accent); color: #fff; }
 }
 
 .sug-year {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.35);
-  font-weight: 500;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
 }
 
 .suggestion-viewall {
-  text-align: center;
-  padding: 12px;
-  font-size: 0.85rem;
+  padding: 12px 20px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--primary);
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background 0.2s;
-
-  &:hover { background: rgba(14, 165, 233, 0.08); }
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+  &:hover { background: rgba(249,115,22,0.06); }
 }
 
-/* ── Loading ─────────────────────────────────────────────────────────────── */
+/* ── Loading ────────────────────────────────────────────────────────────── */
 .search-modal-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px;
-  gap: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 14px;
 
   .spinner {
-    width: 22px;
-    height: 22px;
-    border: 2px solid rgba(255, 255, 255, 0.12);
-    border-top-color: #fff;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-top-color: var(--primary);
     border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    animation: spin 0.6s linear infinite;
+    margin-bottom: 12px;
   }
 }
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
