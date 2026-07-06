@@ -85,20 +85,31 @@
   }
 }
 
+/* ── Menu Title ──────────────────────────────────────────────────────────── */
+.menu-title {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+}
+
 /* ── Single Rectangle Container ─────────────────────────────────────────── */
 .menu-rect {
   display: flex;
-  align-items: flex-end; /* Align elements to the bottom like macOS dock */
-  gap: 16px;             /* Maintain clear distance between items */
-  padding: 10px 24px;
-  background: rgba(20, 20, 20, 0.45); /* Very clean glassy macOS-style dock shelf */
+  align-items: flex-end;
+  gap: 44px;             /* Wide gap so icons never collide when scaled */
+  padding: 14px 40px;
+  background: rgba(20, 20, 20, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 32px;   /* Highly rounded dock shelf */
+  border-radius: 32px;
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65),
               inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: padding 0.3s ease;
 }
 
 /* ── Menu Item ──────────────────────────────────────────────────────────── */
@@ -107,30 +118,58 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* Align the icon to the bottom of the slot */
-  height: 140px;             /* Elevated container to make room for large icons & floating labels */
+  justify-content: flex-end;
+  height: 116px;
   width: auto;
-  padding: 0 10px 10px 10px; /* Base padding at the bottom */
+  padding: 0 4px 8px 4px;
   cursor: pointer;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.55);
-  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
-  background: transparent !important; /* Completely clean, no ugly grey box behind icons */
+  background: transparent !important;
   border: none !important;
 
-  .menu-icon-img {
-    width: 80px;            /* Substantially larger icons as requested */
-    height: 80px;
+  /* ── App Icon Wrapper ────────────────────────────────────────────────── */
+  .menu-icon-wrap {
+    position: relative;
+    width: 62px;
+    height: 62px;
     transform-origin: bottom center;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35)); /* Drop shadow directly on the icon art */
+    will-change: transform;
+    transform: translateZ(0);           /* Force GPU compositing layer */
+    transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    .app-icon-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    /* Glass reflection shine at top */
+    .icon-reflection {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.28) 0%,
+        rgba(255,255,255,0.06) 60%,
+        transparent 100%
+      );
+      border-radius: 14px 14px 0 0;
+      pointer-events: none;
+    }
   }
 
   .menu-label {
     position: absolute;
-    bottom: 125px;           /* Floating beautifully above the enlarged icon */
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%) translateY(8px);
     background: rgba(15, 15, 15, 0.95);
@@ -148,45 +187,49 @@
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1),
-                transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: opacity, transform;
+    transition: opacity 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
     z-index: 100;
   }
 
-  /* macOS Dock fisheye effect logic without any individual card backgrounds */
-  &.hovered-active {
-    color: var(--primary);
-
-    .menu-icon-img {
-      transform: scale(1.48); /* 1.48x growth on active */
-      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5));
-    }
-
-    .menu-label {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
-
-  &.hovered-near {
-    color: rgba(255, 255, 255, 0.85);
-
-    .menu-icon-img {
-      transform: scale(1.24); /* 1.24x growth on neighbor */
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
-    }
-  }
-
-  &.hovered-far {
-    color: rgba(255, 255, 255, 0.7);
-
-    .menu-icon-img {
-      transform: scale(1.1); /* 1.1x growth on secondary neighbor */
-      filter: drop-shadow(0 9px 18px rgba(0, 0, 0, 0.4));
-    }
+  /* Click / tap bounce effect */
+  &:active .menu-icon-wrap {
+    animation: icon-click-bounce 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
   }
 }
+
+/* ── Pure-CSS Fisheye (zero JS, zero Angular CD overhead) ────────────────── */
+
+/* El ícono sobre el que está el cursor */
+.menu-item:hover .menu-icon-wrap {
+  transform: translateZ(0) scale(1.65) translateY(-8px);
+}
+.menu-item:hover .menu-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Vecino derecho +1 */
+.menu-item:hover + .menu-item .menu-icon-wrap {
+  transform: translateZ(0) scale(1.35) translateY(-4px);
+}
+/* Vecino derecho +2 */
+.menu-item:hover + .menu-item + .menu-item .menu-icon-wrap {
+  transform: translateZ(0) scale(1.14) translateY(-2px);
+}
+
+/* Vecino izquierdo -1 */
+.menu-item:has(+ .menu-item:hover) .menu-icon-wrap {
+  transform: translateZ(0) scale(1.35) translateY(-4px);
+}
+/* Vecino izquierdo -2 */
+.menu-item:has(+ .menu-item + .menu-item:hover) .menu-icon-wrap {
+  transform: translateZ(0) scale(1.14) translateY(-2px);
+}
+
+
 
 /* ── Footer Hint ─────────────────────────────────────────────────────────── */
 .menu-footer {
@@ -383,3 +426,11 @@
 
 /* ── Keyframes ──────────────────────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes icon-click-bounce {
+  0%   { transform: scale(1.65) translateY(-8px); }
+  20%  { transform: scale(1.15) translateY(3px) scaleX(1.06); }
+  55%  { transform: scale(1.72) translateY(-12px); }
+  78%  { transform: scale(1.60) translateY(-6px); }
+  100% { transform: scale(1.65) translateY(-8px); }
+}

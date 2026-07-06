@@ -9,42 +9,149 @@
   <div class="menu-backdrop"></div>
   <div class="menu-center" (click)="$event.stopPropagation()">
 
+    <p class="menu-title">Elige una opción</p>
+
     <div class="menu-rect">
-      <a class="menu-item" routerLink="/home" (click)="closeMenu()" 
-         (mouseenter)="menuHover = 0" (mouseleave)="menuHover = null"
-         [class.hovered-active]="getDistance(0) === 0"
-         [class.hovered-near]="getDistance(0) === 1"
-         [class.hovered-far]="getDistance(0) === 2">
+      <!-- Inicio -->
+      <a class="menu-item icon-home" routerLink="/home" (click)="closeMenu()">
         <span class="menu-label">Inicio</span>
-        <img src="home.png" alt="Inicio" class="menu-icon-img">
+        <div class="menu-icon-wrap">
+          <svg class="app-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background rounded rect -->
+            <rect width="80" height="80" rx="18" fill="url(#homeGrad)"/>
+            <!-- House body -->
+            <path d="M40 20 L62 40 L57 40 L57 60 L48 60 L48 48 L32 48 L32 60 L23 60 L23 40 L18 40 Z" fill="white" fill-opacity="0.95"/>
+            <!-- Chimney -->
+            <rect x="46" y="22" width="8" height="14" rx="2" fill="white" fill-opacity="0.7"/>
+            <!-- Door -->
+            <rect x="34" y="48" width="12" height="12" rx="2" fill="url(#homeGrad)" fill-opacity="0.6"/>
+            <!-- Shine -->
+            <ellipse cx="28" cy="30" rx="10" ry="6" fill="white" fill-opacity="0.12" transform="rotate(-20 28 30)"/>
+            <defs>
+              <linearGradient id="homeGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#1d4ed8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="icon-reflection"></div>
+        </div>
       </a>
 
-      <a class="menu-item" routerLink="/movies" (click)="closeMenu()" 
-         (mouseenter)="menuHover = 1" (mouseleave)="menuHover = null"
-         [class.hovered-active]="getDistance(1) === 0"
-         [class.hovered-near]="getDistance(1) === 1"
-         [class.hovered-far]="getDistance(1) === 2">
+      <!-- Películas -->
+      <a class="menu-item icon-movies" routerLink="/movies" (click)="closeMenu()">
         <span class="menu-label">Películas</span>
-        <img src="movies.png" alt="Películas" class="menu-icon-img">
+        <div class="menu-icon-wrap">
+          <svg class="app-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="80" height="80" rx="18" fill="url(#moviesGrad)"/>
+            <!-- Film reel outer -->
+            <circle cx="40" cy="40" r="22" stroke="white" stroke-width="3" fill="none" stroke-opacity="0.9"/>
+            <!-- Film reel center hub -->
+            <circle cx="40" cy="40" r="7" fill="white" fill-opacity="0.9"/>
+            <circle cx="40" cy="40" r="3" fill="url(#moviesGrad)"/>
+            <!-- Sprocket holes around the reel -->
+            <circle cx="40" cy="18" r="3.5" fill="white" fill-opacity="0.85"/>
+            <circle cx="40" cy="62" r="3.5" fill="white" fill-opacity="0.85"/>
+            <circle cx="18" cy="40" r="3.5" fill="white" fill-opacity="0.85"/>
+            <circle cx="62" cy="40" r="3.5" fill="white" fill-opacity="0.85"/>
+            <circle cx="24" cy="24" r="3.5" fill="white" fill-opacity="0.7"/>
+            <circle cx="56" cy="56" r="3.5" fill="white" fill-opacity="0.7"/>
+            <circle cx="56" cy="24" r="3.5" fill="white" fill-opacity="0.7"/>
+            <circle cx="24" cy="56" r="3.5" fill="white" fill-opacity="0.7"/>
+            <!-- Shine -->
+            <ellipse cx="30" cy="25" rx="12" ry="7" fill="white" fill-opacity="0.1" transform="rotate(-30 30 25)"/>
+            <defs>
+              <linearGradient id="moviesGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#dc2626"/>
+                <stop offset="100%" stop-color="#7f1d1d"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="icon-reflection"></div>
+        </div>
       </a>
 
-      <a class="menu-item" routerLink="/series" (click)="closeMenu()" 
-         (mouseenter)="menuHover = 2" (mouseleave)="menuHover = null"
-         [class.hovered-active]="getDistance(2) === 0"
-         [class.hovered-near]="getDistance(2) === 1"
-         [class.hovered-far]="getDistance(2) === 2">
+      <!-- Series -->
+      <a class="menu-item icon-series" routerLink="/series" (click)="closeMenu()">
         <span class="menu-label">Series</span>
-        <img src="series.png" alt="Series" class="menu-icon-img">
+        <div class="menu-icon-wrap">
+          <svg class="app-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="80" height="80" rx="18" fill="url(#seriesGrad)"/>
+            <!-- TV screen outer frame -->
+            <rect x="12" y="18" width="56" height="36" rx="6" fill="white" fill-opacity="0.15" stroke="white" stroke-width="2.5" stroke-opacity="0.9"/>
+            <!-- TV screen inner -->
+            <rect x="16" y="22" width="48" height="28" rx="4" fill="url(#seriesScreenGrad)"/>
+            <!-- Play button on screen -->
+            <path d="M34 29 L34 43 L50 36 Z" fill="white" fill-opacity="0.9"/>
+            <!-- Stand -->
+            <rect x="33" y="54" width="14" height="5" rx="2" fill="white" fill-opacity="0.8"/>
+            <rect x="27" y="59" width="26" height="4" rx="2" fill="white" fill-opacity="0.7"/>
+            <!-- Shine -->
+            <ellipse cx="30" cy="27" rx="10" ry="5" fill="white" fill-opacity="0.12" transform="rotate(-15 30 27)"/>
+            <defs>
+              <linearGradient id="seriesGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#8b5cf6"/>
+                <stop offset="100%" stop-color="#4c1d95"/>
+              </linearGradient>
+              <linearGradient id="seriesScreenGrad" x1="16" y1="22" x2="64" y2="50" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1e1b4b"/>
+                <stop offset="100%" stop-color="#312e81"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="icon-reflection"></div>
+        </div>
       </a>
 
-      <div class="menu-item" (click)="openSearch()" 
-           (mouseenter)="menuHover = 3" (mouseleave)="menuHover = null"
-           [class.hovered-active]="getDistance(3) === 0"
-           [class.hovered-near]="getDistance(3) === 1"
-           [class.hovered-far]="getDistance(3) === 2">
+      <!-- Buscar -->
+      <div class="menu-item icon-search" (click)="openSearch()">
         <span class="menu-label">Buscar</span>
-        <img src="search.png" alt="Buscar" class="menu-icon-img">
+        <div class="menu-icon-wrap">
+          <svg class="app-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="80" height="80" rx="18" fill="url(#searchGrad)"/>
+            <!-- Magnifying glass circle -->
+            <circle cx="35" cy="35" r="16" stroke="white" stroke-width="5" stroke-opacity="0.95" fill="none"/>
+            <!-- Magnifying glass inner highlight -->
+            <circle cx="30" cy="30" r="7" fill="white" fill-opacity="0.12"/>
+            <!-- Handle -->
+            <line x1="47" y1="47" x2="62" y2="62" stroke="white" stroke-width="5.5" stroke-linecap="round" stroke-opacity="0.95"/>
+            <!-- Shine -->
+            <ellipse cx="26" cy="24" rx="9" ry="5" fill="white" fill-opacity="0.15" transform="rotate(-30 26 24)"/>
+            <defs>
+              <linearGradient id="searchGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#10b981"/>
+                <stop offset="100%" stop-color="#064e3b"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="icon-reflection"></div>
+        </div>
       </div>
+
+      <!-- Agradecimientos -->
+      <a class="menu-item icon-thanks" routerLink="/thanks" (click)="closeMenu()">
+        <span class="menu-label">Agradecimientos</span>
+        <div class="menu-icon-wrap">
+          <svg class="app-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="80" height="80" rx="18" fill="url(#thanksGrad)"/>
+            <!-- Star shape -->
+            <path d="M40 14 L44.9 29.5 L61 29.5 L47.8 38.9 L52.7 54.4 L40 45 L27.3 54.4 L32.2 38.9 L19 29.5 L35.1 29.5 Z"
+                  fill="white" fill-opacity="0.95"/>
+            <!-- Inner glow highlight -->
+            <path d="M40 20 L43.4 30.8 L55 30.8 L45.8 37.4 L49.2 48.2 L40 41.6 L30.8 48.2 L34.2 37.4 L25 30.8 L36.6 30.8 Z"
+                  fill="white" fill-opacity="0.18"/>
+            <!-- Shine -->
+            <ellipse cx="31" cy="24" rx="8" ry="4" fill="white" fill-opacity="0.18" transform="rotate(-25 31 24)"/>
+            <defs>
+              <linearGradient id="thanksGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#92400e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="icon-reflection"></div>
+        </div>
+      </a>
     </div>
 
     <div class="menu-footer">
