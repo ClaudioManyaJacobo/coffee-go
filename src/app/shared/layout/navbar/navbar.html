@@ -205,6 +205,10 @@
         <span class="spinner"></span>
         <p>Buscando...</p>
       </div>
+
+      <div class="search-modal-error" *ngIf="hasError && !isLoading">
+        <p>No se pudieron cargar las sugerencias. Verifica tu conexión e intenta de nuevo.</p>
+      </div>
     </div>
   </div>
 </div>

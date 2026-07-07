@@ -7,9 +7,13 @@ import { throwError } from 'rxjs';
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
+  // No redirigir en errores de búsqueda (sugerencias) — el componente maneja el error
+  if (req.url.includes('/search') || req.url.includes('/suggestions')) {
+    return next(req);
+  }
+
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Redirigir a la vista de error si algo falla en red
       router.navigate(['/error']);
       return throwError(() => error);
     })

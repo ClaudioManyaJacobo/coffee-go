@@ -424,6 +424,15 @@
   }
 }
 
+/* ── Error ──────────────────────────────────────────────────────────────── */
+.search-modal-error {
+  padding: 40px 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  font-family: Inter, sans-serif;
+}
+
 /* ── Keyframes ──────────────────────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
 
