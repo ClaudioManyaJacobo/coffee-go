@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay, map, catchError, of } from 'rxjs';
 import { Media, PaginatedResult, TrendingResponse } from '../core/models/media.model';
@@ -7,8 +7,9 @@ import { Media, PaginatedResult, TrendingResponse } from '../core/models/media.m
   providedIn: 'root'
 })
 export class MediaService {
-  private apiUrl = 'http://localhost:3000/api';
-  //private apiUrl = 'https://back-coffee-go.onrender.com/api';
+  private apiUrl = isDevMode()
+    ? 'http://localhost:3000/api'
+    : 'https://back-coffee-go.onrender.com/api';
 
   private cacheTrending$: Observable<TrendingResponse> | null = null;
   private cacheMovies: Map<number, Observable<PaginatedResult<Media>>> = new Map();
